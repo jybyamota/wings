@@ -160,13 +160,13 @@ h4 {
     justify-content: center;
     text-align: center;
     position: relative;
-    background: url('https://images.unsplash.com/photo-1567620832909-9fe5cf7bcfe6?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat;
+    background: url('../images/hero-bg.png') center/cover no-repeat;
 }
 
 .hero-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.72) 55%, rgba(0, 0, 0, 0.9) 100%);
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.55) 50%, rgba(0, 0, 0, 0.75) 100%);
 }
 
 .hero-content {
@@ -192,6 +192,7 @@ h4 {
     color: #fff;
     text-transform: uppercase;
     font-weight: 600;
+    text-shadow: 0 2px 24px rgba(0, 0, 0, 0.75);
 }
 
 .hero-content h1 span {
@@ -201,10 +202,11 @@ h4 {
 .hero-lead {
     font-size: 1rem;
     font-weight: 300;
-    color: rgba(255, 255, 255, 0.82);
+    color: rgba(255, 255, 255, 0.92);
     margin: 0 auto 2.5rem;
     max-width: 640px;
     line-height: 1.85;
+    text-shadow: 0 1px 12px rgba(0, 0, 0, 0.7);
 }
 
 .hero-actions {
@@ -397,7 +399,7 @@ h4 {
     padding: 7rem 2rem;
     text-align: center;
     background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.85)),
-        url('images/combo-snacks-hd.jpg') center/cover no-repeat;
+        url('../images/combo-snacks-hd.jpg') center/cover no-repeat;
 }
 
 .promo-banner-inner h2 {
@@ -613,7 +615,7 @@ h4 {
 /* Menu Template Section */
 .menu-template {
     padding: 6rem 0;
-    background: linear-gradient(rgba(18, 18, 18, 0.85), rgba(18, 18, 18, 0.95)), url('https://images.unsplash.com/photo-1576107232684-1279f390859f?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat;
+    background: linear-gradient(rgba(18, 18, 18, 0.85), rgba(18, 18, 18, 0.95)), url('https://images.unsplash.com/photo-1576107232684-1279f390859f?q=95&w=2400&auto=format&fit=crop') center/cover no-repeat;
 }
 
 .menu-categories {

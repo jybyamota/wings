@@ -28,7 +28,7 @@ require_once __DIR__ . '/includes/header.php';
 
     <main class="home-sections">
         <section id="discover" class="split-section split-section--light">
-            <div class="split-media fade-in" style="background-image: url('images/unlimited-rice-wings.jpg');"></div>
+            <div class="split-media fade-in" style="background-image: url('images/unlimited-rice-wings-tray.png'); background-position: 56% center;"></div>
             <div class="split-content fade-in">
                 <h3 class="split-label">Our Menu</h3>
                 <p>From unlimited rice and wings to sizzling platters, combo snacks, and refreshing drinks—every craving has a flavor waiting for you.</p>
@@ -42,11 +42,11 @@ require_once __DIR__ . '/includes/header.php';
                 <p>Wing Master brings the heat to Samal with handcrafted wings, hearty silog, and generous portions made for families and friends. Quality ingredients, signature sauces, and warm hospitality—every visit feels like a celebration.</p>
                 <a href="<?= page_url('about.php') ?>" class="link-arrow">Learn more</a>
             </div>
-            <div class="split-media fade-in" style="background-image: url('images/tropa-sharing-platter.jpg');"></div>
+            <div class="split-media fade-in" style="background-image: url('images/story-wing-platter.png'); background-position: 70% center;"></div>
         </section>
 
         <section id="visit" class="split-section split-section--light">
-            <div class="split-media fade-in" style="background-image: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1200&auto=format&fit=crop');"></div>
+            <div class="split-media fade-in" style="background-image: url('images/visit-dining-room.png'); background-position: 52% center;"></div>
             <div class="split-content fade-in">
                 <h3 class="split-label">Visit Us</h3>
                 <p>Drop by for dine-in with your tropa or message us to ask about hours and availability. We're ready when you are—come hungry and leave satisfied.</p>

@@ -12,8 +12,8 @@
             <div class="menu-categories fade-in">
                 <div class="menu-category">
                     <button class="category-card" type="button" aria-haspopup="dialog"
-                        data-category-image="images/unlimited-rice-wings.jpg">
-                        <img src="images/unlimited-rice-wings.jpg" alt="Sauced chicken wings" loading="lazy" decoding="async">
+                        data-category-image="images/unlimited-rice-wings-tray.png">
+                        <img src="images/unlimited-rice-wings-tray.png" alt="Sauced chicken wings" loading="lazy" decoding="async">
                         <span class="category-card-title">UNLIMITED RICE/WINGS</span>
                     </button>
                     <div class="category-content">
