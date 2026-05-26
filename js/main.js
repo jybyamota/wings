@@ -78,6 +78,15 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.add('modal-open');
         revealFadeIns(menuSection);
 
+        // Set first category as active
+        const firstCategory = menuSection.querySelector('.menu-category');
+        if (firstCategory) {
+            document.querySelectorAll('.menu-category').forEach(cat => {
+                cat.classList.remove('active');
+            });
+            firstCategory.classList.add('active');
+        }
+
         const closeBtn = menuPopup.querySelector('.menu-popup-close');
         if (closeBtn) {
             closeBtn.focus();
@@ -181,7 +190,14 @@ document.addEventListener('DOMContentLoaded', () => {
         card.addEventListener('click', () => {
             const category = card.closest('.menu-category');
             if (category) {
-                openMenuModal(category);
+                // Toggle active state
+                const isActive = category.classList.contains('active');
+                document.querySelectorAll('.menu-category').forEach(cat => {
+                    cat.classList.remove('active');
+                });
+                if (!isActive) {
+                    category.classList.add('active');
+                }
             }
         });
     });
