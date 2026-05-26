@@ -273,6 +273,15 @@ h4 {
     transform: translateY(-2px);
 }
 
+.btn-primary:active {
+    transform: translateY(0) scale(0.98) rotateZ(-1deg);
+}
+
+.js-open-menu {
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 .btn-outline {
     background: transparent;
     color: #fff;
@@ -540,6 +549,7 @@ h4 {
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.32s ease, visibility 0.32s ease;
+    perspective: 1200px;
 }
 
 .menu-popup.is-open {
@@ -571,13 +581,14 @@ h4 {
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.12);
     box-shadow: 0 28px 80px rgba(0, 0, 0, 0.65);
-    transform: translateY(40px) scale(0.94);
+    transform: perspective(1200px) translateY(40px) scale(0.94) rotateX(25deg) rotateZ(-5deg);
     opacity: 0;
-    transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.32s ease;
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.32s ease;
+    transform-origin: center;
 }
 
 .menu-popup.is-open .menu-popup-panel {
-    transform: translateY(0) scale(1);
+    transform: perspective(1200px) translateY(0) scale(1) rotateX(0deg) rotateZ(0deg);
     opacity: 1;
 }
 
