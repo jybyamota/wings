@@ -214,4 +214,25 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }, 100);
+
+    // 6. Scroll Fade-Out Effect
+    const fadeOutOnScroll = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (!entry.target.classList.contains('appear')) {
+                return;
+            }
+            if (!entry.isIntersecting) {
+                entry.target.classList.add('fade-out-up');
+            } else {
+                entry.target.classList.remove('fade-out-up');
+            }
+        });
+    }, {
+        threshold: [0.1],
+        rootMargin: '0px 0px 0px 0px'
+    });
+
+    fadeElements.forEach(element => {
+        fadeOutOnScroll.observe(element);
+    });
 });
