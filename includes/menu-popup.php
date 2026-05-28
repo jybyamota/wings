@@ -30,7 +30,6 @@
                 <!-- CHICKEN WINGS -->
                 <div class="menu-category" data-category="wings">
                     <div class="category-content">
-                    <div class="category-content">
                         <div class="menu-grid">
                             <div class="menu-item"><div class="menu-item-info"><h4>Wings Solo</h4><p>(8 slices)</p></div><div class="menu-item-price">&#8369;230</div></div>
                             <div class="menu-item"><div class="menu-item-info"><h4>Wings Tropa</h4><p>(12 slices)</p></div><div class="menu-item-price">&#8369;285</div></div>
