@@ -33,7 +33,7 @@ class MotionUI {
             link.addEventListener('click', (e) => {
                 // Skip if it's the current page or external link
                 const href = link.getAttribute('href');
-                if (href === window.location.pathname) return;
+                if (href === window.location.pathname || link.classList.contains('no-transition')) return;
                 
                 e.preventDefault();
                 this.transitionToPage(href);

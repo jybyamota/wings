@@ -59,69 +59,71 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         container.querySelectorAll('.fade-in').forEach(element => {
+            // Remove the appear class to reset
+            element.classList.remove('appear');
+            // Force a reflow to trigger the animation again
+            void element.offsetWidth;
+            // Add the appear class back to trigger the animation
             element.classList.add('appear');
         });
     };
 
-    // 4. View Menu button — pop-out overlay
-    const viewMenuBtn = document.getElementById('view-menu-btn');
-    const menuPopup = document.getElementById('menu-popup');
+    // 4. Full-screen sliding menu panel
     const menuSection = document.getElementById('menu');
-
-    const openMenuPopup = () => {
+    const menuPopup = document.getElementById('menu-popup');
+    const openMenuPanel = () => {
         if (!menuPopup) {
             return;
         }
-
         menuPopup.classList.add('is-open');
         menuPopup.setAttribute('aria-hidden', 'false');
         document.body.classList.add('modal-open');
-        revealFadeIns(menuSection);
-
-        const closeBtn = menuPopup.querySelector('.menu-popup-close');
-        if (closeBtn) {
-            closeBtn.focus();
+        if (menuSection) {
+            revealFadeIns(menuSection);
         }
     };
 
-    const closeMenuPopup = () => {
+    const closeMenuPanel = () => {
         if (!menuPopup) {
             return;
         }
-
         menuPopup.classList.remove('is-open');
         menuPopup.setAttribute('aria-hidden', 'true');
         document.body.classList.remove('modal-open');
-
-        if (viewMenuBtn) {
-            viewMenuBtn.focus();
+        
+        // Reset fade-in animations for menu section
+        if (menuSection) {
+            menuSection.querySelectorAll('.fade-in').forEach(element => {
+                element.classList.remove('appear');
+            });
         }
     };
 
-    if (menuPopup) {
-        document.querySelectorAll('.js-open-menu, #view-menu-btn').forEach(btn => {
-            btn.addEventListener('click', event => {
-                event.preventDefault();
-                if (menuPopup.classList.contains('is-open')) {
-                    closeMenuPopup();
-                } else {
-                    openMenuPopup();
-                }
-            });
+    document.querySelectorAll('.js-open-menu, #view-menu-btn').forEach(btn => {
+        btn.addEventListener('click', event => {
+            event.preventDefault();
+            openMenuPanel();
         });
+    });
 
-        document.querySelectorAll('[data-menu-popup-close]').forEach(control => {
-            control.addEventListener('click', closeMenuPopup);
-        });
+    document.querySelectorAll('[data-menu-popup-close]').forEach(control => {
+        control.addEventListener('click', closeMenuPanel);
+    });
 
-        if (window.location.hash === '#menu') {
-            openMenuPopup();
-        }
+    if (window.location.hash === '#menu' && menuPopup) {
+        openMenuPanel();
     }
 
     document.querySelector('.scroll-indicator')?.addEventListener('click', event => {
         event.preventDefault();
         document.getElementById('discover')?.scrollIntoView({ behavior: 'smooth' });
+    });
+
+    document.querySelectorAll('a.reservation-link').forEach(link => {
+        link.addEventListener('click', event => {
+            event.preventDefault();
+            window.location.href = 'reservation.php';
+        });
     });
 
     const subscribeForm = document.querySelector('.subscribe-form');
@@ -135,79 +137,74 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 5. Menu Category Sidebar Navigation
-    const categoryCards = document.querySelectorAll('.menu-popup .category-card');
+    // 5. Classic card-style menu formatting
+    const menuPopupElement = document.getElementById('menu-popup');
     const menuCategories = document.querySelectorAll('.menu-popup .menu-category');
-    let activeCardIndex = -1;
-    
-    const switchCategory = (activeCard) => {
-        const clickedIndex = Array.from(categoryCards).indexOf(activeCard);
-        
-        // If clicking the same category, toggle it off
-        if (activeCardIndex === clickedIndex) {
-            categoryCards.forEach(card => card.classList.remove('active'));
-            menuCategories.forEach((category) => {
-                const content = category.querySelector('.category-content');
-                if (content) {
-                    content.style.display = 'none';
-                }
-            });
-            activeCardIndex = -1;
+
+    const applyClassicMenuFormat = () => {
+        if (!menuPopupElement || !menuCategories.length) {
             return;
         }
-        
-        // Remove active class from all cards
-        categoryCards.forEach(card => card.classList.remove('active'));
-        
-        // Add active class to clicked card
-        activeCard.classList.add('active');
-        activeCardIndex = clickedIndex;
-        
-        // Hide all category contents and show only the active one
-        menuCategories.forEach((category, index) => {
-            const content = category.querySelector('.category-content');
-            if (content) {
-                content.style.display = index === clickedIndex ? 'block' : 'none';
+
+        menuPopupElement.classList.add('menu-format-classic');
+
+        menuCategories.forEach(category => {
+            const categoryCard = category.querySelector('.category-card');
+            const categoryTitle = category.querySelector('.category-card-title');
+            const categoryImage = categoryCard?.querySelector('img')?.getAttribute('src') || '';
+            const categoryContent = category.querySelector('.category-content');
+            const menuItems = category.querySelectorAll('.menu-item');
+
+            if (categoryCard) {
+                categoryCard.setAttribute('type', 'button');
+                categoryCard.setAttribute('aria-expanded', 'true');
+                categoryCard.disabled = true;
             }
-        });
-    };
-    
-    categoryCards.forEach((card, index) => {
-        card.addEventListener('click', (e) => {
-            e.preventDefault();
-            switchCategory(card);
-        });
-    });
-    
-    // Activate first category when menu opens
-    const menuPopupElement = document.getElementById('menu-popup');
-    if (menuPopupElement) {
-        const observer = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                if (mutation.attributeName === 'aria-hidden') {
-                    if (menuPopupElement.getAttribute('aria-hidden') === 'false') {
-                        // Menu is opening
-                        if (categoryCards.length > 0) {
-                            switchCategory(categoryCards[0]);
-                        }
-                    } else {
-                        // Menu is closing - reset
-                        activeCardIndex = -1;
-                    }
+
+            if (categoryContent) {
+                categoryContent.style.display = 'block';
+            }
+
+            menuItems.forEach(item => {
+                const itemInfo = item.querySelector('.menu-item-info');
+                const itemPrice = item.querySelector('.menu-item-price');
+
+                if (categoryImage && !item.querySelector('.menu-item-thumb')) {
+                    const thumb = document.createElement('div');
+                    thumb.className = 'menu-item-thumb';
+                    thumb.innerHTML = `<img src="${categoryImage}" alt="${categoryTitle?.textContent?.trim() || 'Menu item'}" loading="lazy" decoding="async">`;
+                    item.insertBefore(thumb, item.firstChild);
+                }
+
+                if (itemInfo && !itemInfo.querySelector('.menu-item-stars')) {
+                    const stars = document.createElement('div');
+                    stars.className = 'menu-item-stars';
+                    stars.textContent = '★★★★★';
+                    itemInfo.insertBefore(stars, itemInfo.firstChild);
+                }
+
+                if (itemInfo && !itemInfo.querySelector('.menu-item-cta')) {
+                    const cta = document.createElement('button');
+                    cta.type = 'button';
+                    cta.className = 'menu-item-cta';
+                    cta.textContent = 'Read More';
+                    itemInfo.appendChild(cta);
+                }
+
+                if (itemPrice) {
+                    itemPrice.classList.add('menu-item-price-tag');
                 }
             });
         });
-        observer.observe(menuPopupElement, { attributes: true, attributeFilter: ['aria-hidden'] });
-    }
+    };
+
+    applyClassicMenuFormat();
 
     document.addEventListener('keydown', event => {
         if (event.key !== 'Escape') {
             return;
         }
-
-        if (menuPopup && menuPopup.classList.contains('is-open')) {
-            closeMenuPopup();
-        }
+        closeMenuPanel();
     });
 
     // Trigger initial check for elements already in viewport on load

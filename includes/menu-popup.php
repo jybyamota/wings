@@ -1,4 +1,4 @@
-﻿    <div id="menu-popup" class="menu-popup" role="dialog" aria-modal="true" aria-labelledby="menu-popup-title" aria-hidden="true">
+    <div id="menu-popup" class="menu-popup" role="dialog" aria-modal="true" aria-labelledby="menu-popup-title" aria-hidden="true">
         <div class="menu-popup-backdrop" data-menu-popup-close></div>
         <div class="menu-popup-panel">
             <button type="button" class="menu-popup-close" aria-label="Close menu" data-menu-popup-close>&times;</button>
@@ -10,36 +10,6 @@
             </div>
 
             <div class="menu-categories fade-in">
-                <!-- WINGS FLAVORS -->
-                <div class="menu-category">
-                    <button class="category-card" type="button" aria-haspopup="dialog"
-                        data-category-image="images/unlimited-rice-wings-tray.png">
-                        <img src="images/unlimited-rice-wings-tray.png" alt="Wing flavors" loading="lazy" decoding="async">
-                        <span class="category-card-title">WINGS FLAVORS</span>
-                    </button>
-                    <div class="category-content">
-                        <div class="menu-grid">
-                            <div class="menu-item"><div class="menu-item-info"><h4>⭐ Classic</h4></div><div class="menu-item-price">Market</div></div>
-                            <div class="menu-item"><div class="menu-item-info"><h4>⭐ Buffalo</h4><p>Sweet Chili</p></div><div class="menu-item-price">Market</div></div>
-                            <div class="menu-item"><div class="menu-item-info"><h4>⭐ Spicy Korean</h4><p>Sriracha</p></div><div class="menu-item-price">Market</div></div>
-                            <div class="menu-item"><div class="menu-item-info"><h4>⭐ Honey Glazed</h4></div><div class="menu-item-price">Market</div></div>
-                            <div class="menu-item"><div class="menu-item-info"><h4>Barbeque</h4></div><div class="menu-item-price">Market</div></div>
-                            <div class="menu-item"><div class="menu-item-info"><h4>Soy Garlic</h4></div><div class="menu-item-price">Market</div></div>
-                            <div class="menu-item"><div class="menu-item-info"><h4>Mango Habanero</h4></div><div class="menu-item-price">Market</div></div>
-                            <div class="menu-item"><div class="menu-item-info"><h4>Tonkatsu</h4></div><div class="menu-item-price">Market</div></div>
-                            <div class="menu-item"><div class="menu-item-info"><h4>⭐ Garlic Parmesan</h4></div><div class="menu-item-price">Market</div></div>
-                            <div class="menu-item"><div class="menu-item-info"><h4>⭐ Buttered Garlic</h4></div><div class="menu-item-price">Market</div></div>
-                            <div class="menu-item"><div class="menu-item-info"><h4>⭐ Teriyaki</h4></div><div class="menu-item-price">Market</div></div>
-                            <div class="menu-item"><div class="menu-item-info"><h4>Honey Mustard</h4></div><div class="menu-item-price">Market</div></div>
-                            <div class="menu-item"><div class="menu-item-info"><h4>⭐ Salted Egg</h4></div><div class="menu-item-price">Market</div></div>
-                            <div class="menu-item"><div class="menu-item-info"><h4>⭐ Sour Cream</h4><p>Dinakdakan</p></div><div class="menu-item-price">Market</div></div>
-                            <div class="menu-item"><div class="menu-item-info"><h4>⭐ Classic Cheetos</h4></div><div class="menu-item-price">Market</div></div>
-                            <div class="menu-item"><div class="menu-item-info"><h4>Buffalo Cheetos</h4></div><div class="menu-item-price">Market</div></div>
-                            <div class="menu-item"><div class="menu-item-info"><h4>Yangnyeom</h4></div><div class="menu-item-price">Market</div></div>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- CHICKEN WINGS -->
                 <div class="menu-category">
                     <button class="category-card" type="button" aria-haspopup="dialog"
@@ -285,10 +255,6 @@
                         <div class="menu-modal-items"></div>
                     </div>
                 </div>
-            </div>
-
-            <div class="menu-policy fade-in" style="text-align: center; margin-top: 4rem; padding-bottom: 2rem;">
-                <p style="font-size: 1.8rem; font-weight: 800; color: #ffcc00; letter-spacing: 1px; text-transform: uppercase;">Strictly NO LEFT - OVER</p>
             </div>
 
         </div>

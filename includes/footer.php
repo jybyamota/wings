@@ -19,6 +19,7 @@ $footerVisitLink = $footerVisitLink ?? (($currentPage ?? 'home') === 'home' ? '#
                 <?php endif; ?>
                 <a href="<?= page_url('about.php') ?>">About</a>
                 <a href="<?= htmlspecialchars($footerVisitLink, ENT_QUOTES, 'UTF-8') ?>">Visit Us</a>
+                <a href="<?= page_url('reservation.php') ?>" class="no-transition reservation-link">Reservation</a>
             </nav>
             <p class="footer-contact"><?= SITE_PHONE ?> · <?= SITE_EMAIL ?> · <?= SITE_FACEBOOK ?></p>
             <p class="footer-bottom">&copy; <?= date('Y') ?> <?= SITE_NAME ?>. All rights reserved.</p>
