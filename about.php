@@ -38,7 +38,6 @@ require_once __DIR__ . '/includes/header.php';
             </div>
             <p class="about-cta scroll-slide-up fade-transition-in" data-scroll-animation="slide-up">
                 <a href="<?= page_url('index.php') ?>" class="btn btn-primary">Back to Home</a>
-                <a href="<?= page_url('index.php', 'menu') ?>" class="btn btn-dark">View Menu</a>
             </p>
         </div>
     </section>
