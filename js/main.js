@@ -227,32 +227,16 @@ document.addEventListener('DOMContentLoaded', () => {
         menuPopupElement.classList.add('menu-format-classic');
 
         menuCategories.forEach(category => {
-            const categoryCard = category.querySelector('.category-card');
-            const categoryTitle = category.querySelector('.category-card-title');
-            const categoryImage = categoryCard?.querySelector('img')?.getAttribute('src') || '';
             const categoryContent = category.querySelector('.category-content');
             const menuItems = category.querySelectorAll('.menu-item');
 
-            if (categoryCard) {
-                categoryCard.setAttribute('type', 'button');
-                categoryCard.setAttribute('aria-expanded', 'true');
-                categoryCard.disabled = true;
-            }
-
             if (categoryContent) {
-                categoryContent.style.display = 'block';
+                // Content display is handled by tabs now
             }
 
             menuItems.forEach(item => {
                 const itemInfo = item.querySelector('.menu-item-info');
                 const itemPrice = item.querySelector('.menu-item-price');
-
-                if (categoryImage && !item.querySelector('.menu-item-thumb')) {
-                    const thumb = document.createElement('div');
-                    thumb.className = 'menu-item-thumb';
-                    thumb.innerHTML = `<img src="${categoryImage}" alt="${categoryTitle?.textContent?.trim() || 'Menu item'}" loading="lazy" decoding="async">`;
-                    item.insertBefore(thumb, item.firstChild);
-                }
 
                 if (itemInfo && !itemInfo.querySelector('.menu-item-stars')) {
                     const stars = document.createElement('div');
