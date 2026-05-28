@@ -137,85 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 5. Menu Tabs Navigation
-    const setupMenuTabs = () => {
-        const menuTabs = document.querySelectorAll('.menu-tab');
-        const menuCategories = document.querySelectorAll('.menu-category');
-
-        if (!menuTabs.length || !menuCategories.length) {
-            return;
-        }
-
-        const showCategory = (tabName) => {
-            // Hide all categories
-            menuCategories.forEach(cat => {
-                cat.classList.remove('active');
-                const content = cat.querySelector('.category-content');
-                if (content) {
-                    content.style.display = 'none';
-                }
-            });
-
-            // Remove active from all tabs
-            menuTabs.forEach(tab => {
-                tab.classList.remove('active');
-            });
-
-            // Show selected category
-            const selectedCategory = document.querySelector(`[data-category="${tabName}"]`);
-            if (selectedCategory) {
-                selectedCategory.classList.add('active');
-                const content = selectedCategory.querySelector('.category-content');
-                if (content) {
-                    content.style.display = 'block';
-                }
-            }
-
-            // Set active tab
-            const activeTab = document.querySelector(`[data-tab="${tabName}"]`);
-            if (activeTab) {
-                activeTab.classList.add('active');
-                // Scroll tab into view
-                activeTab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-            }
-        };
-
-        // Add click handlers to tabs
-        menuTabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                const tabName = tab.getAttribute('data-tab');
-                showCategory(tabName);
-            });
-        });
-
-        // Show first tab by default
-        if (menuTabs[0]) {
-            showCategory(menuTabs[0].getAttribute('data-tab'));
-        }
-    };
-
-    // Call setup when menu opens
-    const setupMenuObserver = () => {
-        const menuPopup = document.getElementById('menu-popup');
-        if (!menuPopup) return;
-
-        const observer = new MutationObserver(() => {
-            if (!menuPopup.hasAttribute('aria-hidden') || menuPopup.getAttribute('aria-hidden') === 'false') {
-                setupMenuTabs();
-            }
-        });
-
-        observer.observe(menuPopup, { attributes: true, attributeFilter: ['aria-hidden'] });
-        
-        // Initial setup if menu is already visible
-        if (!menuPopup.hasAttribute('aria-hidden') || menuPopup.getAttribute('aria-hidden') === 'false') {
-            setupMenuTabs();
-        }
-    };
-
-    setupMenuObserver();
-
-    // 6. Classic card-style menu formatting
+    // 5. Classic card-style menu formatting
     const menuPopupElement = document.getElementById('menu-popup');
     const menuCategories = document.querySelectorAll('.menu-popup .menu-category');
 
@@ -227,16 +149,32 @@ document.addEventListener('DOMContentLoaded', () => {
         menuPopupElement.classList.add('menu-format-classic');
 
         menuCategories.forEach(category => {
+            const categoryCard = category.querySelector('.category-card');
+            const categoryTitle = category.querySelector('.category-card-title');
+            const categoryImage = categoryCard?.querySelector('img')?.getAttribute('src') || '';
             const categoryContent = category.querySelector('.category-content');
             const menuItems = category.querySelectorAll('.menu-item');
 
+            if (categoryCard) {
+                categoryCard.setAttribute('type', 'button');
+                categoryCard.setAttribute('aria-expanded', 'true');
+                categoryCard.disabled = true;
+            }
+
             if (categoryContent) {
-                // Content display is handled by tabs now
+                categoryContent.style.display = 'block';
             }
 
             menuItems.forEach(item => {
                 const itemInfo = item.querySelector('.menu-item-info');
                 const itemPrice = item.querySelector('.menu-item-price');
+
+                if (categoryImage && !item.querySelector('.menu-item-thumb')) {
+                    const thumb = document.createElement('div');
+                    thumb.className = 'menu-item-thumb';
+                    thumb.innerHTML = `<img src="${categoryImage}" alt="${categoryTitle?.textContent?.trim() || 'Menu item'}" loading="lazy" decoding="async">`;
+                    item.insertBefore(thumb, item.firstChild);
+                }
 
                 if (itemInfo && !itemInfo.querySelector('.menu-item-stars')) {
                     const stars = document.createElement('div');
