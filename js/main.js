@@ -21,13 +21,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. Sticky Navbar Effect on Scroll
     const navbar = document.getElementById('navbar');
     if (navbar) {
-        window.addEventListener('scroll', () => {
+        const updateNavbarState = () => {
             if (window.scrollY > 50) {
                 navbar.classList.add('scrolled');
             } else {
                 navbar.classList.remove('scrolled');
             }
-        }, { passive: true });
+        };
+
+        updateNavbarState();
+        window.addEventListener('scroll', updateNavbarState, { passive: true });
     }
 
     // 3. Scroll Animations (Intersection Observer)
@@ -71,8 +74,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // 4. Full-screen sliding menu panel
     const menuSection = document.getElementById('menu');
     const menuPopup = document.getElementById('menu-popup');
+
     const openMenuPanel = () => {
         if (!menuPopup) {
+            window.location.href = 'menu.php';
             return;
         }
         menuPopup.classList.add('is-open');
@@ -90,8 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
         menuPopup.classList.remove('is-open');
         menuPopup.setAttribute('aria-hidden', 'true');
         document.body.classList.remove('modal-open');
-        
-        // Reset fade-in animations for menu section
+
         if (menuSection) {
             menuSection.querySelectorAll('.fade-in').forEach(element => {
                 element.classList.remove('appear');
@@ -99,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    document.querySelectorAll('.js-open-menu, #view-menu-btn').forEach(btn => {
+    document.querySelectorAll('.js-open-menu').forEach(btn => {
         btn.addEventListener('click', event => {
             event.preventDefault();
             openMenuPanel();
@@ -149,32 +153,14 @@ document.addEventListener('DOMContentLoaded', () => {
         menuPopupElement.classList.add('menu-format-classic');
 
         menuCategories.forEach(category => {
-            const categoryCard = category.querySelector('.category-card');
-            const categoryTitle = category.querySelector('.category-card-title');
-            const categoryImage = categoryCard?.querySelector('img')?.getAttribute('src') || '';
             const categoryContent = category.querySelector('.category-content');
             const menuItems = category.querySelectorAll('.menu-item');
 
-            if (categoryCard) {
-                categoryCard.setAttribute('type', 'button');
-                categoryCard.setAttribute('aria-expanded', 'true');
-                categoryCard.disabled = true;
-            }
-
-            if (categoryContent) {
-                categoryContent.style.display = 'block';
-            }
+            // Accordion open state is managed by animations.js via the is-open class
 
             menuItems.forEach(item => {
                 const itemInfo = item.querySelector('.menu-item-info');
                 const itemPrice = item.querySelector('.menu-item-price');
-
-                if (categoryImage && !item.querySelector('.menu-item-thumb')) {
-                    const thumb = document.createElement('div');
-                    thumb.className = 'menu-item-thumb';
-                    thumb.innerHTML = `<img src="${categoryImage}" alt="${categoryTitle?.textContent?.trim() || 'Menu item'}" loading="lazy" decoding="async">`;
-                    item.insertBefore(thumb, item.firstChild);
-                }
 
                 if (itemInfo && !itemInfo.querySelector('.menu-item-stars')) {
                     const stars = document.createElement('div');

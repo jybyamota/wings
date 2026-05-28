@@ -240,7 +240,14 @@ body {
     line-height: 1.7;
     overflow-x: hidden;
     font-weight: 400;
+    opacity: 0;
+    transition: opacity 0.15s ease;
 }
+
+body.page-loaded {
+    opacity: 1;
+}
+
 
 html {
     scrollbar-gutter: stable;
@@ -285,11 +292,11 @@ h4 {
 }
 
 #navbar.scrolled {
-    background: var(--glass-bg);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     padding: 1.5rem 0;
-    border-bottom: 1px solid var(--glass-border);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
 }
 
 .nav-container {
@@ -803,8 +810,33 @@ h4 {
 
 /* Menu Template Section */
 .menu-template {
-    padding: 3rem 0;
-    background: linear-gradient(rgba(18, 18, 18, 0.85), rgba(18, 18, 18, 0.95)), url('https://images.unsplash.com/photo-1576107232684-1279f390859f?q=95&w=2400&auto=format&fit=crop') center/cover no-repeat;
+    padding: 9rem 0 4rem;
+    background-color: #121212;
+    background-image: linear-gradient(rgba(18, 18, 18, 0.82), rgba(18, 18, 18, 0.94)), url('../images/hero-bg.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.menu-page .menu-template > .container {
+    opacity: 1;
+}
+
+.menu-page .category-card {
+    aspect-ratio: auto;
+    min-height: 0;
+}
+
+/* Remove background image from menu template when inside modal popup */
+.menu-popup-panel .menu-template {
+    background: none !important;
+    padding: 2rem 0 0;
+}
+
+/* Hide background during all modal states to prevent flash */
+.menu-modal .menu-template {
+    background: transparent !important;
+    background-image: none !important;
 }
 
 .section-title {
@@ -817,106 +849,127 @@ h4 {
 }
 
 .menu-categories {
-    display: grid;
-    grid-template-columns: 280px 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 3rem;
-    align-items: start;
+    align-items: stretch;
     padding: 0;
+    width: 100%;
 }
 
 .menu-categories::before {
-    content: 'CATEGORIES';
-    grid-column: 1;
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 1rem;
-    display: block;
-    margin-left: 0;
-    order: -1;
+    display: none;
 }
 
 /* Category Sidebar */
 .menu-category {
-    display: contents;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
 }
 
 .category-card {
-    grid-column: 1;
     width: 100%;
     aspect-ratio: auto;
     position: relative;
     overflow: visible;
     display: flex;
     align-items: center;
-    padding: 1rem 1.25rem;
+    justify-content: space-between;
+    padding: 0 0 1rem 0;
     color: var(--text-main);
     background: transparent;
     border: none;
-    border-left: 3px solid transparent;
+    border-left: none;
     border-radius: 0;
     cursor: pointer;
     font: inherit;
     text-align: left;
     box-shadow: none;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--accent-gold);
+    transition: color 0.2s ease;
+}
+
+.category-card:hover,
+.category-card:focus-visible {
+    color: var(--accent-gold);
+    outline: none;
 }
 
 .category-card::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: none;
+    display: none;
 }
 
 .category-card img {
     display: none;
 }
 
-.category-card:hover,
-.category-card:focus-visible,
-.category-card.active {
-    border-left-color: var(--accent-gold);
-    color: var(--accent-gold);
-    outline: none;
+.category-card-chevron {
+    flex-shrink: 0;
+    width: 0.6rem;
+    height: 0.6rem;
+    margin-left: 0.85rem;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    top: -3px;
 }
 
-.category-card:hover img,
-.category-card:focus-visible img {
-    transform: none;
+.category-card.is-open .category-card-chevron {
+    transform: rotate(-135deg);
+    top: 3px;
 }
 
 .category-card-title {
     position: relative;
     z-index: 1;
-    font-size: 0.95rem;
-    font-weight: 600;
+    font-size: 1.1rem;
+    font-weight: 700;
     line-height: 1.4;
     color: inherit;
     text-shadow: none;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
 }
 
 /* Product Grid on the Right */
 .category-content {
-    display: contents;
-}
-
-.category-content:first-of-type {
     display: block;
+    width: 100%;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    max-height: 0;
+    transform: translateY(-6px);
+    transition:
+        opacity 0.15s ease,
+        transform 0.15s ease,
+        visibility 0s linear 0.15s,
+        max-height 0s linear 0.15s;
 }
 
-.menu-category:first-child .category-content {
-    display: block;
+.category-content.is-open {
+    opacity: 1;
+    visibility: visible;
+    max-height: none;
+    transform: translateY(0);
+    padding-top: 1.25rem;
+    transition:
+        opacity 0.15s ease,
+        transform 0.15s ease,
+        visibility 0s linear 0s,
+        max-height 0s linear 0s;
 }
 
-.menu-category ~ .menu-category .category-content {
-    display: none;
-}
-
+/* ===== MENU MODAL ===== */
 .menu-modal {
     position: fixed;
     inset: 0;
@@ -1026,7 +1079,8 @@ h4 {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 1.5rem;
-    grid-column: 2;
+    grid-column: auto;
+    width: 100%;
 }
 
 .menu-item {
@@ -1034,7 +1088,7 @@ h4 {
     flex-direction: column;
     justify-content: space-between;
     align-items: stretch;
-    padding: 0;
+    padding: 1.25rem;
     background: var(--bg-card);
     border-radius: 8px;
     border: 1px solid var(--glass-border);
@@ -1043,13 +1097,20 @@ h4 {
     cursor: pointer;
 }
 
+/* Disable menu item transitions while modal is animating to prevent glitch */
+.menu-modal:not(.is-open) .menu-item,
+.menu-modal.is-open .menu-item {
+    transition: none !important;
+}
+
 .menu-item:hover {
     border-color: var(--accent-gold);
     transform: translateY(-4px);
+    transition: border-color var(--transition-speed), transform var(--transition-speed);
 }
 
 .menu-item-info {
-    padding: 1.25rem;
+    padding: 0;
 }
 
 .menu-item-info h4 {
@@ -2131,7 +2192,7 @@ body.page-loaded {
         max-height: 92vh;
         border-radius: 12px 12px 0 0;
         opacity: 0;
-        transition: opacity 0.5s ease;
+        transition: opacity 0.15s ease;
     }
 
     .menu-popup.is-open .menu-popup-panel {
@@ -2450,15 +2511,15 @@ body.page-loaded {
 }
 
 .menu-format-classic .category-card {
-    display: block;
+    display: flex;
     width: 100%;
     border: none;
     background: #252525;
     color: #fff;
     padding: 0.95rem 1.2rem;
     border-radius: 0;
-    cursor: default;
-    margin-bottom: 0.9rem;
+    cursor: pointer;
+    margin-bottom: 0;
 }
 
 .menu-format-classic .category-card img {
@@ -2473,7 +2534,17 @@ body.page-loaded {
 }
 
 .menu-format-classic .category-content {
-    display: block !important;
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.menu-format-classic .category-content.is-open {
+    max-height: none;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    margin-bottom: 1.5rem;
 }
 
 .menu-format-classic .menu-grid {
@@ -2609,17 +2680,17 @@ body.page-loaded {
     }
 }
 
-/* Sliding full-screen menu panel */
+/* Non-floating menu panel - displays as regular tabs/section */
 .menu-popup {
-    position: fixed;
-    inset: 0;
-    z-index: 1500;
+    position: relative;
+    inset: auto;
+    z-index: auto;
     display: block;
     padding: 0;
-    pointer-events: none;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
+    pointer-events: auto;
+    opacity: 1;
+    visibility: visible;
+    transition: none;
 }
 
 .menu-popup.is-open {
@@ -2629,22 +2700,22 @@ body.page-loaded {
 }
 
 .menu-popup-backdrop {
-    display: block;
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.35);
-    backdrop-filter: blur(3px);
-    -webkit-backdrop-filter: blur(3px);
+    display: none;
+    position: relative;
+    inset: auto;
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
 }
 
 .menu-popup-panel {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    width: 100vw;
-    height: 100vh;
-    max-height: 100vh;
-    overflow-y: auto;
+    position: relative;
+    inset: auto;
+    z-index: auto;
+    width: 100%;
+    height: auto;
+    max-height: none;
+    overflow-y: visible;
     border-radius: 0;
     border: none;
     box-shadow: none;
@@ -2656,27 +2727,27 @@ body.page-loaded {
 .menu-popup-panel .menu-template {
     max-height: none;
     overflow: visible;
-    min-height: 100vh;
+    min-height: auto;
     padding: 5.25rem 0 3rem;
 }
 
 .menu-popup-close {
-    display: inline-flex;
-    position: sticky;
-    top: 1rem;
-    left: calc(100% - 3.5rem);
+    display: none;
+    position: relative;
+    top: auto;
+    left: auto;
     margin: 0;
-    width: 2.5rem;
-    height: 2.5rem;
+    width: auto;
+    height: auto;
     align-items: center;
     justify-content: center;
     border: none;
-    border-radius: 50%;
-    background: rgba(0, 0, 0, 0.72);
-    color: #fff;
-    font-size: 1.4rem;
-    cursor: pointer;
-    z-index: 1600;
+    border-radius: 0;
+    background: transparent;
+    color: inherit;
+    font-size: 1rem;
+    cursor: auto;
+    z-index: auto;
 }
 
 
