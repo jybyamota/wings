@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/config.php';
 
-
-
 ?>
     <footer id="footer" class="site-footer">
         <div class="container footer-minimal">

@@ -9,26 +9,14 @@
                 <p>Explore our delicious offerings.</p>
             </div>
 
-            <div class="menu-tabs-container">
-                <div class="menu-tabs fade-in">
-                    <button class="menu-tab active" data-tab="wings" type="button">CHICKEN WINGS</button>
-                    <button class="menu-tab" data-tab="combo" type="button">COMBO SNACKS</button>
-                    <button class="menu-tab" data-tab="solo" type="button">SOLO SNACKS</button>
-                    <button class="menu-tab" data-tab="short" type="button">SHORT ORDERS</button>
-                    <button class="menu-tab" data-tab="appetizers" type="button">APPETIZERS</button>
-                    <button class="menu-tab" data-tab="beverages" type="button">BEVERAGES</button>
-                    <button class="menu-tab" data-tab="rice" type="button">SINGLE RICE MEALS</button>
-                    <button class="menu-tab" data-tab="sizzling" type="button">SIZZLING</button>
-                    <button class="menu-tab" data-tab="sizzling-rice" type="button">SIZZLING RICE</button>
-                    <button class="menu-tab" data-tab="tropa" type="button">TROPA PLATTER</button>
-                    <button class="menu-tab" data-tab="addons" type="button">ADD-ONS</button>
-                    <button class="menu-tab" data-tab="dessert" type="button">DESSERT</button>
-                </div>
-            </div>
-
             <div class="menu-categories fade-in">
                 <!-- CHICKEN WINGS -->
-                <div class="menu-category" data-category="wings">
+                <div class="menu-category">
+                    <button class="category-card" type="button" aria-haspopup="dialog"
+                        data-category-image="images/unlimited-rice-wings-sharp.png">
+                        <img src="images/unlimited-rice-wings-sharp.png" alt="Chicken wings" loading="lazy" decoding="async">
+                        <span class="category-card-title">CHICKEN WINGS</span>
+                    </button>
                     <div class="category-content">
                         <div class="menu-grid">
                             <div class="menu-item"><div class="menu-item-info"><h4>Wings Solo</h4><p>(8 slices)</p></div><div class="menu-item-price">&#8369;230</div></div>
@@ -42,8 +30,13 @@
                 </div>
 
                 <!-- COMBO SNACKS -->
-                <div class="menu-category" data-category="combo">
-                    <div class="category-content" style="display: none;">
+                <div class="menu-category">
+                    <button class="category-card" type="button" aria-haspopup="dialog"
+                        data-category-image="images/combo-snacks-hd.jpg">
+                        <img src="images/combo-snacks-hd.jpg" alt="Combo snacks" loading="lazy" decoding="async">
+                        <span class="category-card-title">COMBO SNACKS</span>
+                    </button>
+                    <div class="category-content">
                         <div class="menu-grid">
                             <div class="menu-item"><div class="menu-item-info"><h4>Flavored Wings & Fries</h4></div><div class="menu-item-price">&#8369;135</div></div>
                             <div class="menu-item"><div class="menu-item-info"><h4>Flavored Wings & Nachos</h4></div><div class="menu-item-price">&#8369;135</div></div>
@@ -55,8 +48,13 @@
                 </div>
 
                 <!-- SOLO SNACKS -->
-                <div class="menu-category" data-category="solo">
-                    <div class="category-content" style="display: none;">
+                <div class="menu-category">
+                    <button class="category-card" type="button" aria-haspopup="dialog"
+                        data-category-image="images/solo-snacks.jpg">
+                        <img src="images/solo-snacks.jpg" alt="Solo snacks" loading="lazy" decoding="async">
+                        <span class="category-card-title">SOLO SNACKS</span>
+                    </button>
+                    <div class="category-content">
                         <div class="menu-grid">
                             <div class="menu-item"><div class="menu-item-info"><h4>Italian Spaghetti</h4></div><div class="menu-item-price">&#8369;75</div></div>
                             <div class="menu-item"><div class="menu-item-info"><h4>Korean Corndog</h4></div><div class="menu-item-price">&#8369;89</div></div>
@@ -72,8 +70,13 @@
                 </div>
 
                 <!-- SHORT ORDERS -->
-                <div class="menu-category" data-category="short">
-                    <div class="category-content" style="display: none;">
+                <div class="menu-category">
+                    <button class="category-card" type="button" aria-haspopup="dialog"
+                        data-category-image="images/asset-contact-sheet.jpg">
+                        <img src="images/asset-contact-sheet.jpg" alt="Short orders" loading="lazy" decoding="async">
+                        <span class="category-card-title">SHORT ORDERS</span>
+                    </button>
+                    <div class="category-content">
                         <div class="menu-grid">
                             <div class="menu-item"><div class="menu-item-info"><h4>Pancit Guisado</h4></div><div class="menu-item-price">&#8369;220</div></div>
                             <div class="menu-item"><div class="menu-item-info"><h4>Breaded Fish Fillet</h4></div><div class="menu-item-price">&#8369;220</div></div>
@@ -89,8 +92,13 @@
                 </div>
 
                 <!-- APPETIZERS -->
-                <div class="menu-category" data-category="appetizers">
-                    <div class="category-content" style="display: none;">
+                <div class="menu-category">
+                    <button class="category-card" type="button" aria-haspopup="dialog"
+                        data-category-image="images/combo-snacks.jpg">
+                        <img src="images/combo-snacks.jpg" alt="Appetizers" loading="lazy" decoding="async">
+                        <span class="category-card-title">APPETIZERS</span>
+                    </button>
+                    <div class="category-content">
                         <div class="menu-grid">
                             <div class="menu-item"><div class="menu-item-info"><h4>Fried Tofu</h4></div><div class="menu-item-price">&#8369;45</div></div>
                             <div class="menu-item"><div class="menu-item-info"><h4>4pcs Lumpiang Ubod</h4></div><div class="menu-item-price">&#8369;45</div></div>
@@ -103,8 +111,13 @@
                 </div>
 
                 <!-- BEVERAGES -->
-                <div class="menu-category" data-category="beverages">
-                    <div class="category-content" style="display: none;">
+                <div class="menu-category">
+                    <button class="category-card" type="button" aria-haspopup="dialog"
+                        data-category-image="images/beverages.jpg">
+                        <img src="images/beverages.jpg" alt="Beverages" loading="lazy" decoding="async">
+                        <span class="category-card-title">BEVERAGES</span>
+                    </button>
+                    <div class="category-content">
                         <div class="menu-grid">
                             <div class="menu-item"><div class="menu-item-info"><h4>Iced Tea Blend</h4></div><div class="menu-item-price">&#8369;75</div></div>
                             <div class="menu-item"><div class="menu-item-info"><h4>Iced Tea Pitcher</h4></div><div class="menu-item-price">&#8369;205</div></div>
@@ -120,8 +133,13 @@
                 </div>
 
                 <!-- SINGLE RICE MEALS -->
-                <div class="menu-category" data-category="rice">
-                    <div class="category-content" style="display: none;">
+                <div class="menu-category">
+                    <button class="category-card" type="button" aria-haspopup="dialog"
+                        data-category-image="images/sizzling-rice-meal.jpg">
+                        <img src="images/sizzling-rice-meal.jpg" alt="Single rice meals" loading="lazy" decoding="async">
+                        <span class="category-card-title">SINGLE RICE MEALS</span>
+                    </button>
+                    <div class="category-content">
                         <div class="menu-grid">
                             <div class="menu-item"><div class="menu-item-info"><h4>Flavored Wings Rice Meal</h4><p>(3 slices)</p></div><div class="menu-item-price">&#8369;135</div></div>
                             <div class="menu-item"><div class="menu-item-info"><h4>ShanghaiSilog</h4></div><div class="menu-item-price">&#8369;145</div></div>
@@ -141,8 +159,13 @@
                 </div>
 
                 <!-- SIZZLING -->
-                <div class="menu-category" data-category="sizzling">
-                    <div class="category-content" style="display: none;">
+                <div class="menu-category">
+                    <button class="category-card" type="button" aria-haspopup="dialog"
+                        data-category-image="images/sizzling.jpg">
+                        <img src="images/sizzling.jpg" alt="Sizzling sisig" loading="lazy" decoding="async">
+                        <span class="category-card-title">SIZZLING</span>
+                    </button>
+                    <div class="category-content">
                         <div class="menu-grid">
                             <div class="menu-item"><div class="menu-item-info"><h4>Sizzling Sisig Tropa</h4></div><div class="menu-item-price">&#8369;280</div></div>
                             <div class="menu-item"><div class="menu-item-info"><h4>Sizzling Lechon Kawali Tropa</h4></div><div class="menu-item-price">&#8369;285</div></div>
@@ -152,8 +175,13 @@
                 </div>
 
                 <!-- SIZZLING RICE MEAL -->
-                <div class="menu-category" data-category="sizzling-rice">
-                    <div class="category-content" style="display: none;">
+                <div class="menu-category">
+                    <button class="category-card" type="button" aria-haspopup="dialog"
+                        data-category-image="images/sizzling-rice-meal.jpg">
+                        <img src="images/sizzling-rice-meal.jpg" alt="Sizzling rice meal" loading="lazy" decoding="async">
+                        <span class="category-card-title">SIZZLING RICE MEAL</span>
+                    </button>
+                    <div class="category-content">
                         <div class="menu-grid">
                             <div class="menu-item"><div class="menu-item-info"><h4>Sizzling SisigSilog</h4></div><div class="menu-item-price">&#8369;165</div></div>
                             <div class="menu-item"><div class="menu-item-info"><h4>Sizzling LechonSilog</h4></div><div class="menu-item-price">&#8369;165</div></div>
@@ -164,8 +192,13 @@
                 </div>
 
                 <!-- TROPA SHARING PLATTER -->
-                <div class="menu-category" data-category="tropa">
-                    <div class="category-content" style="display: none;">
+                <div class="menu-category">
+                    <button class="category-card" type="button" aria-haspopup="dialog"
+                        data-category-image="images/tropa-sharing-platter.jpg">
+                        <img src="images/tropa-sharing-platter.jpg" alt="Tropa sharing platter" loading="lazy" decoding="async">
+                        <span class="category-card-title">TROPA SHARING PLATTER</span>
+                    </button>
+                    <div class="category-content">
                         <div class="menu-grid">
                             <div class="menu-item"><div class="menu-item-info"><h4>Wings Platter</h4></div><div class="menu-item-price">&#8369;365</div></div>
                             <div class="menu-item"><div class="menu-item-info"><h4>Wings & Fries Platter</h4></div><div class="menu-item-price">&#8369;355</div></div>
@@ -178,8 +211,13 @@
                 </div>
 
                 <!-- EXTRA ADD-ONS -->
-                <div class="menu-category" data-category="addons">
-                    <div class="category-content" style="display: none;">
+                <div class="menu-category">
+                    <button class="category-card" type="button" aria-haspopup="dialog"
+                        data-category-image="images/unlimited-rice-wings-variety.png">
+                        <img src="images/unlimited-rice-wings-variety.png" alt="Extra add-ons" loading="lazy" decoding="async">
+                        <span class="category-card-title">EXTRA ADD-ONS</span>
+                    </button>
+                    <div class="category-content">
                         <div class="menu-grid">
                             <div class="menu-item"><div class="menu-item-info"><h4>Plain Rice</h4></div><div class="menu-item-price">&#8369;30</div></div>
                             <div class="menu-item"><div class="menu-item-info"><h4>Garlic Rice</h4></div><div class="menu-item-price">&#8369;50</div></div>
@@ -191,8 +229,13 @@
                 </div>
 
                 <!-- DESSERT -->
-                <div class="menu-category" data-category="dessert">
-                    <div class="category-content" style="display: none;">
+                <div class="menu-category">
+                    <button class="category-card" type="button" aria-haspopup="dialog"
+                        data-category-image="images/dessert.jpg">
+                        <img src="images/dessert.jpg" alt="Desserts" loading="lazy" decoding="async">
+                        <span class="category-card-title">DESSERT</span>
+                    </button>
+                    <div class="category-content">
                         <div class="menu-grid">
                             <div class="menu-item"><div class="menu-item-info"><h4>Fruit Salad Solo</h4></div><div class="menu-item-price">&#8369;95</div></div>
                             <div class="menu-item"><div class="menu-item-info"><h4>Mango Bango Salad</h4></div><div class="menu-item-price">&#8369;95</div></div>

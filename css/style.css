@@ -755,68 +755,6 @@ h4 {
     color: var(--text-muted);
 }
 
-/* Menu Tabs Navigation */
-.menu-tabs-container {
-    position: sticky;
-    top: 0;
-    z-index: 999;
-    background: var(--bg-dark);
-    border-bottom: 1px solid var(--accent-gold);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-}
-
-.menu-tabs {
-    display: flex;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    gap: 0;
-    margin: 0;
-    padding: 0.5rem 0;
-    padding-left: 1rem;
-    padding-right: 1rem;
-}
-
-.menu-tabs::-webkit-scrollbar {
-    height: 4px;
-}
-
-.menu-tabs::-webkit-scrollbar-track {
-    background: var(--bg-light);
-}
-
-.menu-tabs::-webkit-scrollbar-thumb {
-    background: var(--accent-gold);
-    border-radius: 2px;
-}
-
-.menu-tab {
-    flex-shrink: 0;
-    padding: 0.75rem 1.25rem;
-    background: transparent;
-    color: var(--text-muted);
-    border: none;
-    border-bottom: 2px solid transparent;
-    cursor: pointer;
-    font: inherit;
-    font-size: 0.85rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    transition: all 0.3s ease;
-    white-space: nowrap;
-}
-
-.menu-tab:hover {
-    color: var(--text-main);
-    border-bottom-color: var(--accent-gold);
-}
-
-.menu-tab.active {
-    color: var(--accent-gold);
-    border-bottom-color: var(--accent-gold);
-}
-
 /* Full menu pop-out overlay */
 .menu-popup {
     position: relative;
@@ -879,25 +817,52 @@ h4 {
 }
 
 .menu-categories {
-    display: block;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 3rem;
+    align-items: start;
     padding: 0;
 }
 
 .menu-categories::before {
-    display: none;
+    content: 'CATEGORIES';
+    grid-column: 1;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    display: block;
+    margin-left: 0;
+    order: -1;
 }
 
 /* Category Sidebar */
 .menu-category {
-    display: none;
-}
-
-.menu-category.active {
-    display: block;
+    display: contents;
 }
 
 .category-card {
-    display: none;
+    grid-column: 1;
+    width: 100%;
+    aspect-ratio: auto;
+    position: relative;
+    overflow: visible;
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.25rem;
+    color: var(--text-main);
+    background: transparent;
+    border: none;
+    border-left: 3px solid transparent;
+    border-radius: 0;
+    cursor: pointer;
+    font: inherit;
+    text-align: left;
+    box-shadow: none;
+    margin-bottom: 0.5rem;
+}
 
 .category-card::after {
     content: '';
