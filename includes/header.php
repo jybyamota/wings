@@ -7,7 +7,8 @@ require_once __DIR__ . '/config.php';
 $pageTitle = $pageTitle ?? SITE_NAME;
 $currentPage = $currentPage ?? 'home';
 $navScrolled = $navScrolled ?? false;
-$menuClass = 'nav-link-btn js-open-menu';
+$bodyClass = $currentPage === 'menu' ? 'menu-page' : '';
+$cssVersion = (string) filemtime(__DIR__ . '/../css/style.css');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,11 +17,14 @@ $menuClass = 'nav-link-btn js-open-menu';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8') ?></title>
+    <?php if (in_array($currentPage, ['home', 'menu'], true)): ?>
+        <link rel="preload" as="image" href="<?= page_url('images/hero-bg.png') ?>" fetchpriority="high">
+    <?php endif; ?>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="<?= page_url('css/style.css') ?>?v=<?= $cssVersion ?>">
 </head>
 
-<body>
+<body<?= $bodyClass !== '' ? ' class="' . htmlspecialchars($bodyClass, ENT_QUOTES, 'UTF-8') . '"' : '' ?>>
     <nav id="navbar"<?= $navScrolled ? ' class="scrolled"' : '' ?>>
         <div class="container nav-container">
             <a href="<?= page_url('index.php') ?>" class="logo">
@@ -28,10 +32,10 @@ $menuClass = 'nav-link-btn js-open-menu';
             </a>
             <div class="nav-links fade-transition-in">
                 <a href="<?= page_url('index.php') ?>">Home</a>
-                <button type="button" class="<?= $menuClass ?>">Menu</button>
+                <a href="<?= page_url('menu.php') ?>">Menu</a>
                 <a href="<?= page_url('wings-flavors.php') ?>">Flavors</a>
                 <a href="<?= page_url('about.php') ?>">About</a>
-                <a href="<?= page_url('reservation.php') ?>" class="no-transition reservation-link">Reservation</a>
+                <a href="<?= page_url('reservation.php') ?>">Reservation</a>
             </div>
             <div class="hamburger">
                 <div class="bar"></div>

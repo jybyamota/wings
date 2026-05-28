@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 $pageTitle = 'Reservation - Wing Master';
 $currentPage = 'reservation';
-$navScrolled = true;
+$navScrolled = false;
 
 require_once __DIR__ . '/includes/header.php';
 
@@ -32,7 +32,4 @@ require_once __DIR__ . '/includes/header.php';
         <div class="split-media scroll-scale-in" style="background-image: url('images/visit-dining-room.png'); background-position: 56% center;" data-scroll-animation="scale-in"></div>
     </section>
 
-<?php 
-require_once __DIR__ . '/includes/menu-popup.php';
-require_once __DIR__ . '/includes/footer.php'; 
-?>
+<?php require_once __DIR__ . '/includes/footer.php'; ?>

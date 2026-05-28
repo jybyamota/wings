@@ -120,12 +120,9 @@ require_once __DIR__ . '/includes/header.php';
             <div class="flavors-cta scroll-slide-up" data-scroll-animation="slide-up">
                 <h2 style="animation-delay: 0.1s;">Ready to Order?</h2>
                 <p style="animation-delay: 0.2s;">Choose your favorite flavors and enjoy them with rice, fries, or as a standalone snack</p>
-                <button type="button" class="btn btn-primary js-open-menu fade-transition-in" style="animation-delay: 0.3s;">View Full Menu</button>
+                <a href="<?= page_url('menu.php') ?>" class="btn btn-primary fade-transition-in" style="animation-delay: 0.3s;">View Full Menu</a>
             </div>
         </div>
     </main>
 
-<?php 
-require_once __DIR__ . '/includes/menu-popup.php';
-require_once __DIR__ . '/includes/footer.php'; 
-?>
+<?php require_once __DIR__ . '/includes/footer.php'; ?>

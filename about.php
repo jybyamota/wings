@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 $pageTitle = 'About Us - Wing Master';
 $currentPage = 'about';
-$navScrolled = true;
+$navScrolled = false;
 
 require_once __DIR__ . '/includes/header.php';
 
@@ -42,7 +42,4 @@ require_once __DIR__ . '/includes/header.php';
         </div>
     </section>
 
-<?php 
-require_once __DIR__ . '/includes/menu-popup.php';
-require_once __DIR__ . '/includes/footer.php'; 
-?>
+<?php require_once __DIR__ . '/includes/footer.php'; ?>

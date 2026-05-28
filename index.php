@@ -9,14 +9,14 @@ $navScrolled = false;
 require_once __DIR__ . '/includes/header.php';
 
 ?>
-    <section id="hero" class="hero transition-fade-in">
+    <section id="hero" class="hero">
         <div class="hero-overlay"></div>
         <div class="hero-content slide-transition-up">
             <p class="hero-eyebrow" style="animation-delay: 0.1s;"><?= SITE_TAGLINE ?></p>
             <h1 style="animation-delay: 0.2s;">EAT LIKE A<br><span>WING MASTER!</span></h1>
             <p class="hero-lead" style="animation-delay: 0.3s;">Discover unlimited wings, silog meals, and bold flavors made for sharing. Bring your tropa for an unforgettable feast—celebrate, indulge, and eat like a Wing Master today.</p>
             <div class="hero-actions" style="animation-delay: 0.4s;">
-                <button type="button" class="btn btn-primary js-open-menu fade-transition-in" id="view-menu-btn">View Menu</button>
+                <a href="<?= page_url('menu.php') ?>" class="btn btn-primary fade-transition-in" id="view-menu-btn">View Menu</a>
             </div>
         </div>
         <a href="#discover" class="scroll-indicator" aria-label="Scroll to explore">
@@ -31,7 +31,7 @@ require_once __DIR__ . '/includes/header.php';
             <div class="split-content scroll-slide-up" data-scroll-animation="slide-up">
                 <h3 class="split-label">Our Menu</h3>
                 <p>From unlimited rice and wings to sizzling platters, combo snacks, and refreshing drinks—every craving has a flavor waiting for you.</p>
-                <button type="button" class="btn btn-dark js-open-menu fade-transition-in">Explore Menu</button>
+                <a href="<?= page_url('menu.php') ?>" class="btn btn-dark fade-transition-in">Explore Menu</a>
             </div>
         </section>
 
@@ -49,7 +49,7 @@ require_once __DIR__ . '/includes/header.php';
             <div class="container promo-banner-inner">
                 <h2 class="slide-transition-up" style="animation-delay: 0.1s;">UNLIMITED WINGS &amp; SILOG</h2>
                 <p style="animation-delay: 0.2s;">Signature flavors, sharing platters, and the best wings experience in Samal—feast without limits.</p>
-                <button type="button" class="btn btn-primary js-open-menu fade-transition-in" style="animation-delay: 0.3s;">View Full Menu</button>
+                <a href="<?= page_url('menu.php') ?>" class="btn btn-primary fade-transition-in" style="animation-delay: 0.3s;">View Full Menu</a>
             </div>
         </section>
 
@@ -67,5 +67,4 @@ require_once __DIR__ . '/includes/header.php';
     </main>
 
 <?php
-require_once __DIR__ . '/includes/menu-popup.php';
 require_once __DIR__ . '/includes/footer.php';
