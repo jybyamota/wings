@@ -17,7 +17,6 @@ require_once __DIR__ . '/includes/header.php';
             <p class="hero-lead" style="animation-delay: 0.3s;">Discover unlimited wings, silog meals, and bold flavors made for sharing. Bring your tropa for an unforgettable feast—celebrate, indulge, and eat like a Wing Master today.</p>
             <div class="hero-actions" style="animation-delay: 0.4s;">
                 <button type="button" class="btn btn-primary js-open-menu fade-transition-in" id="view-menu-btn">View Menu</button>
-                <a href="#visit" class="btn btn-outline">Visit Us</a>
             </div>
         </div>
         <a href="#discover" class="scroll-indicator" aria-label="Scroll to explore">
@@ -45,19 +44,7 @@ require_once __DIR__ . '/includes/header.php';
             <div class="split-media scroll-scale-in" style="background-image: url('images/story-wing-platter.png'); background-position: 70% center;" data-parallax="0.5" data-scroll-animation="scale-in"></div>
         </section>
 
-        <section id="visit" class="split-section split-section--light fade-transition-in">
-            <div class="split-media reveal-left" style="background-image: url('images/visit-dining-room.png'); background-position: 52% center;" data-scroll-animation="slide-left"></div>
-            <div class="split-content scroll-slide-right" data-scroll-animation="slide-right">
-                <h3 class="split-label">Visit Us</h3>
-                <p>Drop by for dine-in with your tropa or message us to ask about hours and availability. We're ready when you are—come hungry and leave satisfied.</p>
-                <ul class="visit-details">
-                    <li><strong>Hours</strong> <?= SITE_HOURS ?></li>
-                    <li><strong>Call</strong> <a href="tel:09091639984"><?= SITE_PHONE ?></a></li>
-                    <li><strong>Email</strong> <a href="mailto:<?= SITE_EMAIL ?>"><?= SITE_EMAIL ?></a></li>
-                </ul>
-                <a href="#footer" class="btn btn-dark">Get in Touch</a>
-            </div>
-        </section>
+
 
         <section id="highlights" class="promo-banner scroll-fade-in" data-scroll-animation="fade-in">
             <div class="container promo-banner-inner">
