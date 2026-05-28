@@ -45,7 +45,6 @@ require_once __DIR__ . '/includes/header.php';
         </section>
 
 
-
         <section id="highlights" class="promo-banner scroll-fade-in" data-scroll-animation="fade-in">
             <div class="container promo-banner-inner">
                 <h2 class="slide-transition-up" style="animation-delay: 0.1s;">UNLIMITED WINGS &amp; SILOG</h2>
