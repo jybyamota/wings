@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/config.php';
 
-$footerVisitLink = $footerVisitLink ?? (($currentPage ?? 'home') === 'home' ? '#visit' : page_url('index.php', 'visit'));
+
 
 ?>
     <footer id="footer" class="site-footer">
@@ -18,7 +18,6 @@ $footerVisitLink = $footerVisitLink ?? (($currentPage ?? 'home') === 'home' ? '#
                     <a href="<?= page_url('index.php', 'menu') ?>">Menu</a>
                 <?php endif; ?>
                 <a href="<?= page_url('about.php') ?>">About</a>
-                <a href="<?= htmlspecialchars($footerVisitLink, ENT_QUOTES, 'UTF-8') ?>">Visit Us</a>
                 <a href="<?= page_url('reservation.php') ?>" class="no-transition reservation-link">Reservation</a>
             </nav>
             <p class="footer-contact"><?= SITE_PHONE ?> · <?= SITE_EMAIL ?> · <?= SITE_FACEBOOK ?></p>
