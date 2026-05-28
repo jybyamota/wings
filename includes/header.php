@@ -7,6 +7,8 @@ require_once __DIR__ . '/config.php';
 $pageTitle = $pageTitle ?? SITE_NAME;
 $currentPage = $currentPage ?? 'home';
 $navScrolled = $navScrolled ?? false;
+$menuClass = 'nav-link-btn js-open-menu';
+$visitHref = $currentPage === 'home' ? '#visit' : page_url('index.php', 'visit');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,19 +24,16 @@ $navScrolled = $navScrolled ?? false;
 <body>
     <nav id="navbar"<?= $navScrolled ? ' class="scrolled"' : '' ?>>
         <div class="container nav-container">
-            <a href="<?= page_url('index.php') ?>" class="logo">WING<span>MASTER</span></a>
-            <div class="nav-links">
-                <?php if ($currentPage === 'home'): ?>
-                    <button type="button" class="nav-link-btn js-open-menu">Menu</button>
-                    <a href="<?= page_url('about.php') ?>">About</a>
-                    <a href="#visit">Visit Us</a>
-                    <a href="#footer">Contact</a>
-                <?php else: ?>
-                    <a href="<?= page_url('index.php') ?>">Home</a>
-                    <a href="<?= page_url('index.php', 'menu') ?>">Menu</a>
-                    <a href="<?= page_url('about.php') ?>">About</a>
-                    <a href="<?= page_url('index.php', 'visit') ?>">Visit Us</a>
-                <?php endif; ?>
+            <a href="<?= page_url('index.php') ?>" class="logo">
+                <img src="images/logo.png" alt="Wing Master Silog - Davao's Pride" class="logo-image">
+            </a>
+            <div class="nav-links fade-transition-in">
+                <a href="<?= page_url('index.php') ?>">Home</a>
+                <button type="button" class="<?= $menuClass ?>">Menu</button>
+                <a href="<?= page_url('wings-flavors.php') ?>">Flavors</a>
+                <a href="<?= page_url('about.php') ?>">About</a>
+                <a href="<?= htmlspecialchars($visitHref, ENT_QUOTES, 'UTF-8') ?>">Visit Us</a>
+                <a href="<?= page_url('reservation.php') ?>" class="no-transition reservation-link">Reservation</a>
             </div>
             <div class="hamburger">
                 <div class="bar"></div>

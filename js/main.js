@@ -59,74 +59,71 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         container.querySelectorAll('.fade-in').forEach(element => {
+            // Remove the appear class to reset
+            element.classList.remove('appear');
+            // Force a reflow to trigger the animation again
+            void element.offsetWidth;
+            // Add the appear class back to trigger the animation
             element.classList.add('appear');
         });
     };
 
-    // 4. View Menu button — pop-out overlay
-    const viewMenuBtn = document.getElementById('view-menu-btn');
-    const menuPopup = document.getElementById('menu-popup');
+    // 4. Full-screen sliding menu panel
     const menuSection = document.getElementById('menu');
-
-    const openMenuPopup = () => {
+    const menuPopup = document.getElementById('menu-popup');
+    const openMenuPanel = () => {
         if (!menuPopup) {
             return;
         }
-
         menuPopup.classList.add('is-open');
         menuPopup.setAttribute('aria-hidden', 'false');
         document.body.classList.add('modal-open');
-        revealFadeIns(menuSection);
-
-        // Set first category as active
-        const firstCategory = menuSection.querySelector('.menu-category');
-        if (firstCategory) {
-            document.querySelectorAll('.menu-category').forEach(cat => {
-                cat.classList.remove('active');
-            });
-            firstCategory.classList.add('active');
-        }
-
-        const closeBtn = menuPopup.querySelector('.menu-popup-close');
-        if (closeBtn) {
-            closeBtn.focus();
+        if (menuSection) {
+            revealFadeIns(menuSection);
         }
     };
 
-    const closeMenuPopup = () => {
+    const closeMenuPanel = () => {
         if (!menuPopup) {
             return;
         }
-
         menuPopup.classList.remove('is-open');
         menuPopup.setAttribute('aria-hidden', 'true');
         document.body.classList.remove('modal-open');
-
-        if (viewMenuBtn) {
-            viewMenuBtn.focus();
+        
+        // Reset fade-in animations for menu section
+        if (menuSection) {
+            menuSection.querySelectorAll('.fade-in').forEach(element => {
+                element.classList.remove('appear');
+            });
         }
     };
 
-    if (menuPopup) {
-        document.querySelectorAll('.js-open-menu, #view-menu-btn').forEach(btn => {
-            btn.addEventListener('click', event => {
-                event.preventDefault();
-                openMenuPopup();
-            });
+    document.querySelectorAll('.js-open-menu, #view-menu-btn').forEach(btn => {
+        btn.addEventListener('click', event => {
+            event.preventDefault();
+            openMenuPanel();
         });
+    });
 
-        document.querySelectorAll('[data-menu-popup-close]').forEach(control => {
-            control.addEventListener('click', closeMenuPopup);
-        });
+    document.querySelectorAll('[data-menu-popup-close]').forEach(control => {
+        control.addEventListener('click', closeMenuPanel);
+    });
 
-        if (window.location.hash === '#menu') {
-            openMenuPopup();
-        }
+    if (window.location.hash === '#menu' && menuPopup) {
+        openMenuPanel();
     }
 
     document.querySelector('.scroll-indicator')?.addEventListener('click', event => {
         event.preventDefault();
         document.getElementById('discover')?.scrollIntoView({ behavior: 'smooth' });
+    });
+
+    document.querySelectorAll('a.reservation-link').forEach(link => {
+        link.addEventListener('click', event => {
+            event.preventDefault();
+            window.location.href = 'reservation.php';
+        });
     });
 
     const subscribeForm = document.querySelector('.subscribe-form');
@@ -140,85 +137,74 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 5. Floating Menu Category Viewer
-    const categoryCards = document.querySelectorAll('.category-card');
-    const menuModal = document.querySelector('.menu-modal');
-    const modalTitle = document.getElementById('menu-modal-title');
-    const modalImage = document.querySelector('.menu-modal-image');
-    const modalItems = document.querySelector('.menu-modal-items');
-    let activeCategoryCard = null;
+    // 5. Classic card-style menu formatting
+    const menuPopupElement = document.getElementById('menu-popup');
+    const menuCategories = document.querySelectorAll('.menu-popup .menu-category');
 
-    const closeMenuModal = () => {
-        if (!menuModal) {
+    const applyClassicMenuFormat = () => {
+        if (!menuPopupElement || !menuCategories.length) {
             return;
         }
 
-        menuModal.classList.remove('is-open');
-        menuModal.setAttribute('aria-hidden', 'true');
-        document.body.classList.remove('modal-open');
+        menuPopupElement.classList.add('menu-format-classic');
 
-        if (activeCategoryCard) {
-            activeCategoryCard.focus();
-            activeCategoryCard = null;
-        }
-    };
+        menuCategories.forEach(category => {
+            const categoryCard = category.querySelector('.category-card');
+            const categoryTitle = category.querySelector('.category-card-title');
+            const categoryImage = categoryCard?.querySelector('img')?.getAttribute('src') || '';
+            const categoryContent = category.querySelector('.category-content');
+            const menuItems = category.querySelectorAll('.menu-item');
 
-    const openMenuModal = category => {
-        const card = category.querySelector('.category-card');
-        const title = category.querySelector('.category-card-title');
-        const content = category.querySelector('.category-content');
-
-        if (!menuModal || !modalTitle || !modalImage || !modalItems || !card || !title || !content) {
-            return;
-        }
-
-        activeCategoryCard = card;
-        modalTitle.textContent = title.textContent;
-        modalImage.style.backgroundImage = `url('${card.dataset.categoryImage}')`;
-        modalItems.innerHTML = content.innerHTML;
-        menuModal.classList.add('is-open');
-        menuModal.setAttribute('aria-hidden', 'false');
-        document.body.classList.add('modal-open');
-
-        const closeButton = menuModal.querySelector('.menu-modal-close');
-        if (closeButton) {
-            closeButton.focus();
-        }
-    };
-
-    categoryCards.forEach(card => {
-        card.addEventListener('click', () => {
-            const category = card.closest('.menu-category');
-            if (category) {
-                // Toggle active state
-                const isActive = category.classList.contains('active');
-                document.querySelectorAll('.menu-category').forEach(cat => {
-                    cat.classList.remove('active');
-                });
-                if (!isActive) {
-                    category.classList.add('active');
-                }
+            if (categoryCard) {
+                categoryCard.setAttribute('type', 'button');
+                categoryCard.setAttribute('aria-expanded', 'true');
+                categoryCard.disabled = true;
             }
-        });
-    });
 
-    document.querySelectorAll('[data-menu-close]').forEach(closeControl => {
-        closeControl.addEventListener('click', closeMenuModal);
-    });
+            if (categoryContent) {
+                categoryContent.style.display = 'block';
+            }
+
+            menuItems.forEach(item => {
+                const itemInfo = item.querySelector('.menu-item-info');
+                const itemPrice = item.querySelector('.menu-item-price');
+
+                if (categoryImage && !item.querySelector('.menu-item-thumb')) {
+                    const thumb = document.createElement('div');
+                    thumb.className = 'menu-item-thumb';
+                    thumb.innerHTML = `<img src="${categoryImage}" alt="${categoryTitle?.textContent?.trim() || 'Menu item'}" loading="lazy" decoding="async">`;
+                    item.insertBefore(thumb, item.firstChild);
+                }
+
+                if (itemInfo && !itemInfo.querySelector('.menu-item-stars')) {
+                    const stars = document.createElement('div');
+                    stars.className = 'menu-item-stars';
+                    stars.textContent = '★★★★★';
+                    itemInfo.insertBefore(stars, itemInfo.firstChild);
+                }
+
+                if (itemInfo && !itemInfo.querySelector('.menu-item-cta')) {
+                    const cta = document.createElement('button');
+                    cta.type = 'button';
+                    cta.className = 'menu-item-cta';
+                    cta.textContent = 'Read More';
+                    itemInfo.appendChild(cta);
+                }
+
+                if (itemPrice) {
+                    itemPrice.classList.add('menu-item-price-tag');
+                }
+            });
+        });
+    };
+
+    applyClassicMenuFormat();
 
     document.addEventListener('keydown', event => {
         if (event.key !== 'Escape') {
             return;
         }
-
-        if (menuModal && menuModal.classList.contains('is-open')) {
-            closeMenuModal();
-            return;
-        }
-
-        if (menuPopup && menuPopup.classList.contains('is-open')) {
-            closeMenuPopup();
-        }
+        closeMenuPanel();
     });
 
     // Trigger initial check for elements already in viewport on load

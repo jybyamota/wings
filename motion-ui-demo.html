@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motion UI - Animation Showcase</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            padding-top: 80px;
+        }
+        
+        .demo-section {
+            padding: 4rem 2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .demo-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--accent-gold);
+        }
+        
+        .demo-section h3 {
+            font-size: 1.3rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text-main);
+        }
+        
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .demo-card {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .demo-card:hover {
+            border-color: var(--accent-gold);
+            transform: translateY(-5px);
+        }
+        
+        .demo-card p {
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        .demo-button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .demo-button:hover {
+            background: var(--primary-hover);
+        }
+        
+        .demo-element {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-gold));
+            border-radius: 8px;
+            margin: 1rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .code-block {
+            background: rgba(0,0,0,0.5);
+            border-left: 4px solid var(--accent-gold);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            overflow-x: auto;
+            color: #88dd77;
+        }
+        
+        .parallax-demo {
+            height: 400px;
+            background: url('images/story-wing-platter.png') center/cover;
+            position: relative;
+            overflow: hidden;
+            margin: 2rem 0;
+            border-radius: 8px;
+        }
+        
+        .parallax-overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .parallax-text {
+            font-size: 2rem;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            z-index: 10;
+        }
+        
+        .animation-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .animation-item {
+            background: rgba(201,162,39,0.1);
+            border-left: 3px solid var(--accent-gold);
+            padding: 1rem;
+            border-radius: 4px;
+        }
+        
+        .animation-item code {
+            color: #88dd77;
+            background: rgba(0,0,0,0.3);
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            display: block;
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <nav id="navbar">
+        <div class="container nav-container">
+            <div class="logo">Motion UI Demo</div>
+            <div class="nav-links">
+                <a href="#transitions">Page Transitions</a>
+                <a href="#swipe">Swipe</a>
+                <a href="#fade">Fade</a>
+                <a href="#slide">Slide</a>
+                <a href="#reveal">Reveal</a>
+                <a href="#scroll">Scroll</a>
+                <a href="#parallax">Parallax</a>
+                <a href="#effects">Effects</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- PAGE TRANSITIONS -->
+        <section id="transitions" class="demo-section transition-fade-in">
+            <h2 class="slide-transition-up">Page Transitions</h2>
+            <p>Animation when switching between pages or sections. Content fades and slides smoothly.</p>
+            
+            <h3>How it works:</h3>
+            <div class="code-block">
+// Auto-applied on page load
+&lt;main class="transition-fade-in"&gt;
+    &lt;section class="slide-in-animation"&gt;
+        Content automatically animates on page load
+    &lt;/section&gt;
+&lt;/main&gt;
+            </div>
+            
+            <div class="demo-grid">
+                <div class="demo-card slide-transition-up" style="animation-delay: 0s;">
+                    <div class="demo-element">1</div>
+                    <p>Page Load</p>
+                    <p style="font-size: 0.75rem; color: var(--text-muted);">transition-fade-in</p>
+                </div>
+                <div class="demo-card slide-transition-up" style="animation-delay: 0.1s;">
+                    <div class="demo-element">2</div>
+                    <p>Section Stagger</p>
+                    <p style="font-size: 0.75rem; color: var(--text-muted);">slide-in-animation</p>
+                </div>
+                <div class="demo-card slide-transition-up" style="animation-delay: 0.2s;">
+                    <div class="demo-element">3</div>
+                    <p>Auto-Sequence</p>
+                    <p style="font-size: 0.75rem; color: var(--text-muted);">Each 0.1s delay</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SWIPE TRANSITIONS -->
+        <section id="swipe" class="demo-section">
+            <h2 class="slide-transition-up">Swipe Transitions</h2>
+            <p>Content slides in/out on mobile swipe gestures. Automatically triggered on touch devices.</p>
+            
+            <h3>How it works:</h3>
+            <div class="code-block">
+// Automatic on swipe left/right
+&lt;nav class="nav-links"&gt;
+    Navigation automatically slides out on left swipe
+    Navigation automatically slides in on right swipe
+&lt;/nav&gt;
+            </div>
+            
+            <div class="animation-list">
+                <div class="animation-item">
+                    <strong>Swipe Left</strong>
+                    <code>swipe-out-left</code>
+                </div>
+                <div class="animation-item">
+                    <strong>Swipe Right</strong>
+                    <code>swipe-out-right</code>
+                </div>
+                <div class="animation-item">
+                    <strong>Slide In Left</strong>
+                    <code>swipe-in-left</code>
+                </div>
+                <div class="animation-item">
+                    <strong>Slide In Right</strong>
+                    <code>swipe-in-right</code>
+                </div>
+            </div>
+            
+            <button class="demo-button" onclick="
+                const el = document.querySelector('.swipe-demo');
+                el.classList.add('swipe-in-right');
+                setTimeout(() => el.classList.remove('swipe-in-right'), 400);
+            ">Test Swipe-In Animation</button>
+            
+            <div class="swipe-demo" style="margin-top: 2rem; background: linear-gradient(135deg, var(--primary-color), var(--accent-gold)); padding: 2rem; border-radius: 8px; text-align: center; color: white;">
+                Swipe animation demo box
+            </div>
+        </section>
+
+        <!-- FADE TRANSITIONS -->
+        <section id="fade" class="demo-section">
+            <h2 class="slide-transition-up">Fade Transitions</h2>
+            <p>Elements smoothly disappear and appear through opacity changes.</p>
+            
+            <div class="demo-grid">
+                <div class="demo-card fade-transition-in" style="animation-delay: 0s;">
+                    <div class="demo-element">F</div>
+                    <p>Fade In</p>
+                    <button class="demo-button" onclick="this.parentElement.parentElement.classList.add('fade-transition-out'); setTimeout(() => this.parentElement.parentElement.classList.remove('fade-transition-out'), 400);">Demo</button>
+                </div>
+                <div class="demo-card fade-transition-in" style="animation-delay: 0.1s;">
+                    <div class="demo-element">X</div>
+                    <p>Cross Fade</p>
+                    <button class="demo-button" onclick="alert('Cross-fade between elements');">Demo</button>
+                </div>
+                <div class="demo-card fade-transition-in" style="animation-delay: 0.2s;">
+                    <div class="demo-element">S</div>
+                    <p>Smooth</p>
+                    <button class="demo-button" onclick="alert('Smooth opacity transition');">Demo</button>
+                </div>
+            </div>
+            
+            <div class="code-block">
+&lt;div class="fade-transition-in"&gt;
+    Fades in over 0.5 seconds
+&lt;/div&gt;
+
+&lt;div class="fade-transition-out"&gt;
+    Fades out over 0.4 seconds
+&lt;/div&gt;
+            </div>
+        </section>
+
+        <!-- SLIDE TRANSITIONS -->
+        <section id="slide" class="demo-section">
+            <h2 class="slide-transition-up">Slide Transitions</h2>
+            <p>Content moves horizontally or vertically into view with smooth easing.</p>
+            
+            <div class="demo-grid">
+                <div class="slide-transition-up">
+                    <div class="demo-card">
+                        <div class="demo-element">↑</div>
+                        <p>Slide Up</p>
+                        <p style="font-size: 0.75rem; color: var(--text-muted);">slide-transition-up</p>
+                    </div>
+                </div>
+                <div class="slide-transition-down">
+                    <div class="demo-card">
+                        <div class="demo-element">↓</div>
+                        <p>Slide Down</p>
+                        <p style="font-size: 0.75rem; color: var(--text-muted);">slide-transition-down</p>
+                    </div>
+                </div>
+                <div class="slide-transition-left">
+                    <div class="demo-card">
+                        <div class="demo-element">←</div>
+                        <p>Slide Left</p>
+                        <p style="font-size: 0.75rem; color: var(--text-muted);">slide-transition-left</p>
+                    </div>
+                </div>
+                <div class="slide-transition-right">
+                    <div class="demo-card">
+                        <div class="demo-element">→</div>
+                        <p>Slide Right</p>
+                        <p style="font-size: 0.75rem; color: var(--text-muted);">slide-transition-right</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- REVEAL ANIMATIONS -->
+        <section id="reveal" class="demo-section">
+            <h2 class="slide-transition-up">Reveal Animations</h2>
+            <p>Content gradually appears using clip-path reveals or character-by-character text reveal.</p>
+            
+            <h3>Clip-Path Reveals</h3>
+            <div class="demo-grid">
+                <div class="demo-card reveal-top">
+                    <div class="demo-element">↓</div>
+                    <p>Reveal Top</p>
+                </div>
+                <div class="demo-card reveal-bottom">
+                    <div class="demo-element">↑</div>
+                    <p>Reveal Bottom</p>
+                </div>
+                <div class="demo-card reveal-left">
+                    <div class="demo-element">→</div>
+                    <p>Reveal Left</p>
+                </div>
+                <div class="demo-card reveal-right">
+                    <div class="demo-element">←</div>
+                    <p>Reveal Right</p>
+                </div>
+            </div>
+            
+            <h3>Text Reveal Examples</h3>
+            <div class="code-block">
+&lt;h2 data-reveal="text"&gt;
+    Each character reveals smoothly one at a time
+&lt;/h2&gt;
+
+&lt;div data-reveal="lines"&gt;
+    Line 1&lt;br&gt;
+    Line 2&lt;br&gt;
+    Line 3
+&lt;/div&gt;
+            </div>
+        </section>
+
+        <!-- SCROLL ANIMATIONS -->
+        <section id="scroll" class="demo-section">
+            <h2 class="slide-transition-up">Scroll Animations</h2>
+            <p>Animations are triggered as elements enter the viewport while scrolling.</p>
+            
+            <h3>Scroll down to see animations trigger:</h3>
+            
+            <div style="height: 300px; display: flex; align-items: center; justify-content: center; background: rgba(196,30,58,0.1); border-radius: 8px; margin: 2rem 0;">
+                <p style="text-align: center; color: var(--text-muted);">👇 Scroll down 👇</p>
+            </div>
+            
+            <div class="fade-in appear">
+                <div class="demo-card">
+                    <div class="demo-element">🎬</div>
+                    <p>Fade In on Scroll</p>
+                    <p style="font-size: 0.75rem; color: var(--text-muted);">class="fade-in appear"</p>
+                </div>
+            </div>
+            
+            <div style="height: 300px; display: flex; align-items: center; justify-content: center; background: rgba(196,30,58,0.1); border-radius: 8px; margin: 2rem 0;">
+                <p style="text-align: center; color: var(--text-muted);">Continue scrolling ↓</p>
+            </div>
+            
+            <div class="fade-in appear">
+                <div class="demo-card">
+                    <div class="demo-element">🚀</div>
+                    <p>Another Scroll Element</p>
+                    <p style="font-size: 0.75rem; color: var(--text-muted);">Staggered animation timing</p>
+                </div>
+            </div>
+            
+            <div class="animation-list">
+                <div class="animation-item">
+                    <strong>Fade In</strong>
+                    <code>scroll-fade-in</code>
+                </div>
+                <div class="animation-item">
+                    <strong>Slide Up</strong>
+                    <code>scroll-slide-up</code>
+                </div>
+                <div class="animation-item">
+                    <strong>Slide Down</strong>
+                    <code>scroll-slide-down</code>
+                </div>
+                <div class="animation-item">
+                    <strong>Scale In</strong>
+                    <code>scroll-scale-in</code>
+                </div>
+                <div class="animation-item">
+                    <strong>Rotate In</strong>
+                    <code>scroll-rotate-in</code>
+                </div>
+            </div>
+        </section>
+
+        <!-- PARALLAX EFFECT -->
+        <section id="parallax" class="demo-section">
+            <h2 class="slide-transition-up">Parallax Effect</h2>
+            <p>Background and foreground elements move at different speeds for depth effect.</p>
+            
+            <h3>How to use:</h3>
+            <div class="code-block">
+&lt;div data-parallax="0.5" 
+     style="background-image: url('background.jpg')"&gt;
+    Background moves at 50% of scroll speed
+    Creating beautiful depth effect
+&lt;/div&gt;
+
+Speed values: 0.3 (slow), 0.5 (medium), 0.7 (fast)
+            </div>
+            
+            <div class="parallax-demo" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/story-wing-platter.png'); background-attachment: fixed;">
+                <div class="parallax-overlay">
+                    <div class="parallax-text">
+                        Scroll to see parallax effect
+                    </div>
+                </div>
+            </div>
+            
+            <p style="text-align: center; color: var(--text-muted); margin-top: 2rem;">
+                💡 The background image moves slower than the page scroll for a depth effect
+            </p>
+        </section>
+
+        <!-- ADVANCED EFFECTS -->
+        <section id="effects" class="demo-section">
+            <h2 class="slide-transition-up">Advanced Motion Effects</h2>
+            <p>Additional interactive animations for special moments and user feedback.</p>
+            
+            <h3>Interactive Effects - Click to trigger:</h3>
+            <div class="demo-grid">
+                <div class="demo-card">
+                    <div class="demo-element" id="bounce-demo">💫</div>
+                    <p>Bounce</p>
+                    <button class="demo-button" onclick="
+                        const el = document.getElementById('bounce-demo').parentElement.parentElement;
+                        el.classList.add('bounce');
+                        setTimeout(() => el.classList.remove('bounce'), 600);
+                    ">Trigger</button>
+                </div>
+                
+                <div class="demo-card">
+                    <div class="demo-element" id="pulse-demo">⭐</div>
+                    <p>Pulse</p>
+                    <button class="demo-button" onclick="
+                        const el = document.getElementById('pulse-demo').parentElement.parentElement;
+                        el.classList.add('pulse');
+                        setTimeout(() => el.classList.remove('pulse'), 2000);
+                    ">Trigger</button>
+                </div>
+                
+                <div class="demo-card">
+                    <div class="demo-element" id="shake-demo">⚠️</div>
+                    <p>Shake</p>
+                    <button class="demo-button" onclick="
+                        const el = document.getElementById('shake-demo').parentElement.parentElement;
+                        el.classList.add('shake');
+                        setTimeout(() => el.classList.remove('shake'), 400);
+                    ">Trigger</button>
+                </div>
+                
+                <div class="demo-card">
+                    <div class="demo-element" id="glow-demo">✨</div>
+                    <p>Glow</p>
+                    <button class="demo-button" onclick="
+                        const el = document.getElementById('glow-demo').parentElement.parentElement;
+                        el.classList.add('glow');
+                        setTimeout(() => el.classList.remove('glow'), 1000);
+                    ">Trigger</button>
+                </div>
+                
+                <div class="demo-card">
+                    <div class="demo-element" id="pop-demo">🎉</div>
+                    <p>Pop In</p>
+                    <button class="demo-button" onclick="
+                        const el = document.getElementById('pop-demo').parentElement.parentElement;
+                        el.classList.add('pop-in');
+                        setTimeout(() => el.classList.remove('pop-in'), 400);
+                    ">Trigger</button>
+                </div>
+                
+                <div class="demo-card">
+                    <div class="demo-element" id="rotate-demo">🔄</div>
+                    <p>Rotate</p>
+                    <button class="demo-button" onclick="
+                        const el = document.getElementById('rotate-demo').parentElement.parentElement;
+                        el.classList.add('rotate-360');
+                        setTimeout(() => el.classList.remove('rotate-360'), 1000);
+                    ">Trigger</button>
+                </div>
+            </div>
+            
+            <h3 style="margin-top: 3rem;">More Effects</h3>
+            <div class="animation-list">
+                <div class="animation-item">
+                    <strong>Flip (Y-axis)</strong>
+                    <code>.flip</code>
+                </div>
+                <div class="animation-item">
+                    <strong>Flip (X-axis)</strong>
+                    <code>.flip-x</code>
+                </div>
+                <div class="animation-item">
+                    <strong>Blur In</strong>
+                    <code>.blur-in</code>
+                </div>
+                <div class="animation-item">
+                    <strong>Skew In</strong>
+                    <code>.skew-in</code>
+                </div>
+                <div class="animation-item">
+                    <strong>Wave</strong>
+                    <code>.wave</code>
+                </div>
+                <div class="animation-item">
+                    <strong>Wobble</strong>
+                    <code>.wobble</code>
+                </div>
+                <div class="animation-item">
+                    <strong>Scale Pulse</strong>
+                    <code>.scale-pulse</code>
+                </div>
+                <div class="animation-item">
+                    <strong>Spotlight</strong>
+                    <code>.spotlight</code>
+                </div>
+            </div>
+        </section>
+
+        <!-- IMPLEMENTATION GUIDE -->
+        <section class="demo-section">
+            <h2 class="slide-transition-up">How to Implement</h2>
+            <p>Three simple ways to use animations in your project:</p>
+            
+            <h3>1. CSS Classes (Simplest)</h3>
+            <div class="code-block">
+&lt;div class="slide-transition-up pop-in"&gt;
+    This element slides up and pops in on page load
+&lt;/div&gt;
+            </div>
+            
+            <h3>2. Data Attributes (For scroll triggers)</h3>
+            <div class="code-block">
+&lt;img class="fade-in" src="image.jpg" alt="Description"&gt;
+&lt;p data-scroll-animation="slide-up"&gt;Appears when scrolled into view&lt;/p&gt;
+            </div>
+            
+            <h3>3. JavaScript API (For complex interactions)</h3>
+            <div class="code-block">
+// Access the MotionUI object
+window.motionUI.bounceElement(element);
+window.motionUI.slideElement(element, 'up', 100, 400);
+window.motionUI.fadeElement(element, 300, true);
+window.motionUI.rotateElement(element, 360, 1000);
+            </div>
+        </section>
+    </main>
+
+    <!-- Include Motion UI System -->
+    <script src="js/animations.js"></script>
+    <script src="js/main.js"></script>
+    
+    <script>
+        // Demo-specific enhancements
+        document.addEventListener('DOMContentLoaded', () => {
+            // Highlight active section in nav
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-links a');
+            
+            window.addEventListener('scroll', () => {
+                let current = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (pageYOffset >= sectionTop - 200) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + current) {
+                        link.classList.add('active');
+                    }
+                });
+            }, { passive: true });
+        });
+    </script>
+</body>
+</html>
