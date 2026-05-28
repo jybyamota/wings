@@ -25,6 +25,9 @@ $footerVisitLink = $footerVisitLink ?? (($currentPage ?? 'home') === 'home' ? '#
         </div>
     </footer>
 
+    <!-- Motion UI Animations System -->
+    <script src="js/animations.js"></script>
+    <!-- Main Application Scripts -->
     <script src="js/main.js"></script>
 </body>
 

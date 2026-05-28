@@ -78,15 +78,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.add('modal-open');
         revealFadeIns(menuSection);
 
-        // Set first category as active
-        const firstCategory = menuSection.querySelector('.menu-category');
-        if (firstCategory) {
-            document.querySelectorAll('.menu-category').forEach(cat => {
-                cat.classList.remove('active');
-            });
-            firstCategory.classList.add('active');
-        }
-
         const closeBtn = menuPopup.querySelector('.menu-popup-close');
         if (closeBtn) {
             closeBtn.focus();
@@ -111,7 +102,11 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.js-open-menu, #view-menu-btn').forEach(btn => {
             btn.addEventListener('click', event => {
                 event.preventDefault();
-                openMenuPopup();
+                if (menuPopup.classList.contains('is-open')) {
+                    closeMenuPopup();
+                } else {
+                    openMenuPopup();
+                }
             });
         });
 
@@ -140,79 +135,73 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 5. Floating Menu Category Viewer
-    const categoryCards = document.querySelectorAll('.category-card');
-    const menuModal = document.querySelector('.menu-modal');
-    const modalTitle = document.getElementById('menu-modal-title');
-    const modalImage = document.querySelector('.menu-modal-image');
-    const modalItems = document.querySelector('.menu-modal-items');
-    let activeCategoryCard = null;
-
-    const closeMenuModal = () => {
-        if (!menuModal) {
-            return;
-        }
-
-        menuModal.classList.remove('is-open');
-        menuModal.setAttribute('aria-hidden', 'true');
-        document.body.classList.remove('modal-open');
-
-        if (activeCategoryCard) {
-            activeCategoryCard.focus();
-            activeCategoryCard = null;
-        }
-    };
-
-    const openMenuModal = category => {
-        const card = category.querySelector('.category-card');
-        const title = category.querySelector('.category-card-title');
-        const content = category.querySelector('.category-content');
-
-        if (!menuModal || !modalTitle || !modalImage || !modalItems || !card || !title || !content) {
-            return;
-        }
-
-        activeCategoryCard = card;
-        modalTitle.textContent = title.textContent;
-        modalImage.style.backgroundImage = `url('${card.dataset.categoryImage}')`;
-        modalItems.innerHTML = content.innerHTML;
-        menuModal.classList.add('is-open');
-        menuModal.setAttribute('aria-hidden', 'false');
-        document.body.classList.add('modal-open');
-
-        const closeButton = menuModal.querySelector('.menu-modal-close');
-        if (closeButton) {
-            closeButton.focus();
-        }
-    };
-
-    categoryCards.forEach(card => {
-        card.addEventListener('click', () => {
-            const category = card.closest('.menu-category');
-            if (category) {
-                // Toggle active state
-                const isActive = category.classList.contains('active');
-                document.querySelectorAll('.menu-category').forEach(cat => {
-                    cat.classList.remove('active');
-                });
-                if (!isActive) {
-                    category.classList.add('active');
+    // 5. Menu Category Sidebar Navigation
+    const categoryCards = document.querySelectorAll('.menu-popup .category-card');
+    const menuCategories = document.querySelectorAll('.menu-popup .menu-category');
+    let activeCardIndex = -1;
+    
+    const switchCategory = (activeCard) => {
+        const clickedIndex = Array.from(categoryCards).indexOf(activeCard);
+        
+        // If clicking the same category, toggle it off
+        if (activeCardIndex === clickedIndex) {
+            categoryCards.forEach(card => card.classList.remove('active'));
+            menuCategories.forEach((category) => {
+                const content = category.querySelector('.category-content');
+                if (content) {
+                    content.style.display = 'none';
                 }
+            });
+            activeCardIndex = -1;
+            return;
+        }
+        
+        // Remove active class from all cards
+        categoryCards.forEach(card => card.classList.remove('active'));
+        
+        // Add active class to clicked card
+        activeCard.classList.add('active');
+        activeCardIndex = clickedIndex;
+        
+        // Hide all category contents and show only the active one
+        menuCategories.forEach((category, index) => {
+            const content = category.querySelector('.category-content');
+            if (content) {
+                content.style.display = index === clickedIndex ? 'block' : 'none';
             }
         });
+    };
+    
+    categoryCards.forEach((card, index) => {
+        card.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchCategory(card);
+        });
     });
-
-    document.querySelectorAll('[data-menu-close]').forEach(closeControl => {
-        closeControl.addEventListener('click', closeMenuModal);
-    });
+    
+    // Activate first category when menu opens
+    const menuPopupElement = document.getElementById('menu-popup');
+    if (menuPopupElement) {
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.attributeName === 'aria-hidden') {
+                    if (menuPopupElement.getAttribute('aria-hidden') === 'false') {
+                        // Menu is opening
+                        if (categoryCards.length > 0) {
+                            switchCategory(categoryCards[0]);
+                        }
+                    } else {
+                        // Menu is closing - reset
+                        activeCardIndex = -1;
+                    }
+                }
+            });
+        });
+        observer.observe(menuPopupElement, { attributes: true, attributeFilter: ['aria-hidden'] });
+    }
 
     document.addEventListener('keydown', event => {
         if (event.key !== 'Escape') {
-            return;
-        }
-
-        if (menuModal && menuModal.classList.contains('is-open')) {
-            closeMenuModal();
             return;
         }
 
