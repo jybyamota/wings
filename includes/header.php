@@ -36,6 +36,12 @@ $cssVersion = (string) filemtime(__DIR__ . '/../css/style.css');
                 <a href="<?= page_url('wings-flavors.php') ?>">Flavors</a>
                 <a href="<?= page_url('about.php') ?>">About</a>
                 <a href="<?= page_url('reservation.php') ?>">Reservation</a>
+                <?php if ((isset($_SESSION['user_email']) && $currentPage === 'reservation') || (isset($_SESSION['admin_auth']) && $_SESSION['admin_auth'] === true && $currentPage === 'admin')): ?>
+                <form method="post" style="display:inline; margin:0 0 0 1.5rem;">
+                    <input type="hidden" name="action" value="logout">
+                    <button type="submit" style="background:none; border:1px solid rgba(255,255,255,0.15); color:rgba(255,255,255,0.45); font-family:inherit; font-size:0.65rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; padding:0.4rem 0.9rem; cursor:pointer; border-radius:2px; transition:all 0.25s; width:auto;" onmouseover="this.style.color='#E8B83C'; this.style.borderColor='rgba(232,184,60,0.5)'" onmouseout="this.style.color='rgba(255,255,255,0.45)'; this.style.borderColor='rgba(255,255,255,0.15)'">Sign Out</button>
+                </form>
+                <?php endif; ?>
             </div>
             <div class="hamburger">
                 <div class="bar"></div>

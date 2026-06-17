@@ -1,0 +1,55 @@
+[
+    {
+        "id": "res_6a326d65747949.36064230",
+        "email": "KOBEMICHAEL1014@GMAIL.COM",
+        "name": "KOBE MICHAEL",
+        "party": 6,
+        "date": "2026-06-18",
+        "time": "3:00 PM",
+        "notes": "",
+        "status": "Cancelled",
+        "created_at": "2026-06-17 09:48:21",
+        "payment_status": "Rejected"
+    },
+    {
+        "id": "res_6a3271db40eb52.18639601",
+        "email": "KOBEMICHAEL1014@GMAIL.COM",
+        "name": "KOBE MICHAEL",
+        "party": 8,
+        "date": "2026-06-23",
+        "time": "6:30 PM",
+        "notes": "",
+        "status": "Cancelled",
+        "created_at": "2026-06-17 10:07:23",
+        "payment_status": "Rejected"
+    },
+    {
+        "id": "res_6a327440051f60.62524379",
+        "reference_number": "WM-20260617-001",
+        "email": "test@example.com",
+        "name": "Juan Dela Cruz",
+        "party": 2,
+        "date": "2026-06-25",
+        "time": "6:00 PM",
+        "notes": "",
+        "status": "Confirmed",
+        "payment_screenshot": null,
+        "payment_status": "Verified",
+        "created_at": "2026-06-17 10:17:36",
+        "verified_at": "2026-06-17 10:17:52"
+    },
+    {
+        "id": "res_6a3276ca2e0f23.86164042",
+        "reference_number": "WM-20260617-002",
+        "email": "KOBEMICHAEL1014@GMAIL.COM",
+        "name": "KOBE MICHAEL",
+        "party": 7,
+        "date": "2026-06-18",
+        "time": "6:00 PM",
+        "notes": "",
+        "status": "Cancelled",
+        "payment_screenshot": null,
+        "payment_status": "Rejected",
+        "created_at": "2026-06-17 10:28:26"
+    }
+]

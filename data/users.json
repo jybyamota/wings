@@ -1,0 +1,12 @@
+{
+    "KOBEMICHAEL1014@GMAIL.COM": {
+        "name": "KOBE MICHAEL",
+        "phone": "09640623454",
+        "hash": "$2y$12$iNisGnhGQgoV9Xjdl.OgZ.Ne8CYeLE7aQWyq33d7L5YN\/uaZRhfES"
+    },
+    "test@example.com": {
+        "name": "Juan Dela Cruz",
+        "phone": "",
+        "hash": "$2y$12$vpMVdPrUOOYBdFlH7N9hEuki2HqGpdwUeDiqdxQd6J9jSzYl9KUGO"
+    }
+}
