@@ -3,6 +3,7 @@
 :root {
     --primary-color: #E8B83C;
     --primary-hover: #d4a52a;
+    --navbar-height: 112px;
     --accent-gold: #E8B83C;
     --bg-dark: #0F100E;
     --bg-cream: #171916;
@@ -287,8 +288,23 @@ h4 {
     z-index: 1000;
     background: transparent;
     padding: 1.5rem 0;
-    transition: background 0.4s ease, padding 0.4s ease, backdrop-filter 0.4s ease;
+    transition: background 0.4s ease, padding 0.4s ease, backdrop-filter 0.4s ease, transform 0.28s ease-in-out, top 0.28s ease-in-out;
     min-height: 112px;
+}
+
+/* Offset page hero/title so it doesn't sit under the fixed navbar */
+.page-hero {
+    margin-top: var(--navbar-height);
+}
+
+/* Hide navbar when scrolling down, reveal on scroll up */
+.nav-hidden {
+    transform: translateY(-120%);
+}
+
+/* More specific selector to ensure rule applies to the navbar element */
+#navbar.nav-hidden {
+    transform: translateY(-120%);
 }
 
 #navbar.scrolled {
@@ -1286,6 +1302,229 @@ h4 {
     gap: 1rem;
     justify-content: center;
     margin-top: 3rem;
+}
+
+/* About Page */
+.about-hero {
+    position: relative;
+    margin-top: 0;
+    min-height: calc(100vh - var(--navbar-height));
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding: calc(var(--navbar-height) + 4rem) 2rem 5rem;
+    text-align: left;
+    background:
+        linear-gradient(90deg, rgba(15, 16, 14, 0.96) 0%, rgba(15, 16, 14, 0.78) 42%, rgba(15, 16, 14, 0.22) 100%),
+        url('../images/unlimited-rice-wings-variety.png') 72% center/cover no-repeat;
+    border-bottom: 0;
+}
+
+.about-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 18% 24%, rgba(232, 184, 60, 0.16), transparent 28%),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.62));
+    pointer-events: none;
+}
+
+.about-hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 690px;
+    margin: 0;
+}
+
+.about-hero h1 {
+    font-size: clamp(3.2rem, 8vw, 6.6rem);
+    line-height: 0.9;
+    max-width: 680px;
+}
+
+.about-hero .hero-lead {
+    max-width: 590px;
+    margin-bottom: 2rem;
+}
+
+.about-hero .hero-actions {
+    justify-content: flex-start;
+}
+
+.about-hero .btn-outline {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.36);
+}
+
+.about-page {
+    background: var(--bg-dark);
+}
+
+.about-section-title {
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    line-height: 1;
+    margin-bottom: 1.35rem;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.split-section--light .about-section-title {
+    color: var(--text-main);
+}
+
+.about-proof-list {
+    display: grid;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.about-proof-item {
+    display: grid;
+    grid-template-columns: 2.75rem 1fr;
+    column-gap: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(232, 184, 60, 0.18);
+}
+
+.about-proof-item span {
+    grid-row: span 2;
+    width: 2.75rem;
+    height: 2.75rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-gold);
+    border: 1px solid rgba(232, 184, 60, 0.34);
+    border-radius: 50%;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+}
+
+.about-proof-item strong {
+    display: block;
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.15;
+}
+
+.about-proof-item p {
+    margin: 0.35rem 0 0;
+    font-size: 0.86rem;
+    line-height: 1.65;
+}
+
+.about-banner {
+    padding: 7rem 2rem;
+    text-align: center;
+    background:
+        linear-gradient(rgba(0, 0, 0, 0.58), rgba(0, 0, 0, 0.84)),
+        url('../images/unlimited-rice-wings-tray.png') center 58%/cover no-repeat;
+}
+
+@media (max-width: 1180px) {
+    .about-hero {
+        background-position: 62% center;
+    }
+
+    .about-hero-inner {
+        max-width: 600px;
+    }
+
+    .about-hero h1 {
+        font-size: clamp(3rem, 8vw, 5.4rem);
+    }
+
+}
+
+@media (max-width: 900px) {
+    .about-hero {
+        min-height: auto;
+        padding: calc(var(--navbar-height) + 3rem) 1.5rem 4.5rem;
+        background:
+            linear-gradient(90deg, rgba(15, 16, 14, 0.96) 0%, rgba(15, 16, 14, 0.82) 58%, rgba(15, 16, 14, 0.42) 100%),
+            url('../images/unlimited-rice-wings-variety.png') 64% center/cover no-repeat;
+    }
+
+    .about-hero-inner {
+        max-width: 560px;
+    }
+
+    .about-proof-item strong {
+        font-size: 1.25rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .about-hero {
+        min-height: auto;
+        padding: calc(86px + 2rem) 1.25rem 4rem;
+        text-align: center;
+        background:
+            linear-gradient(180deg, rgba(15, 16, 14, 0.7) 0%, rgba(15, 16, 14, 0.9) 42%, rgba(15, 16, 14, 0.98) 100%),
+            url('../images/unlimited-rice-wings-variety.png') center top/cover no-repeat;
+    }
+
+    .about-hero-inner {
+        max-width: 520px;
+        margin: 0 auto;
+    }
+
+    .about-hero h1 {
+        font-size: clamp(2.4rem, 12vw, 4rem);
+        line-height: 0.95;
+    }
+
+    .about-hero .hero-lead {
+        max-width: 100%;
+        margin-bottom: 1.5rem;
+        font-size: 0.92rem;
+        line-height: 1.65;
+    }
+
+    .about-hero .hero-actions {
+        justify-content: center;
+    }
+
+    .about-section-title {
+        font-size: clamp(1.75rem, 9vw, 2.6rem);
+        line-height: 1.05;
+    }
+
+    .about-proof-item {
+        text-align: left;
+    }
+
+    .about-banner {
+        padding: 4.5rem 1.25rem;
+    }
+}
+
+@media (max-width: 520px) {
+    .about-hero {
+        padding: calc(86px + 1.5rem) 1rem 3.25rem;
+    }
+
+    .about-hero h1 {
+        font-size: clamp(2.05rem, 13vw, 3.15rem);
+    }
+
+    .about-hero .hero-actions .btn {
+        width: min(100%, 280px);
+    }
+
+    .about-proof-item {
+        grid-template-columns: 2.45rem 1fr;
+        column-gap: 0.85rem;
+    }
+
+    .about-proof-item span {
+        width: 2.45rem;
+        height: 2.45rem;
+        font-size: 0.68rem;
+    }
 }
 
 @media (max-width: 1100px) {
@@ -4277,4 +4516,3 @@ body.item-modal-open {
         align-items: flex-start;
     }
 }
-
