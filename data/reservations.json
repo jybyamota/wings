@@ -76,9 +76,9 @@
         "date": "2026-06-19",
         "time": "12:00 PM",
         "notes": "",
-        "status": "Pending Payment",
+        "status": "Cancelled",
         "payment_screenshot": "WM-20260618-001.jpg",
-        "payment_status": "Pending",
+        "payment_status": "Rejected",
         "created_at": "2026-06-18 17:57:50"
     },
     {
@@ -90,10 +90,27 @@
         "date": "2026-06-19",
         "time": "12:30 PM",
         "notes": "bohsshshs",
-        "status": "Pending Payment",
+        "status": "Confirmed",
         "payment_screenshot": "WM-20260618-002.jpg",
-        "payment_status": "Pending",
+        "payment_status": "Verified",
         "created_at": "2026-06-18 17:59:07",
-        "screenshot_uploaded_at": "2026-06-18 17:59:54"
+        "screenshot_uploaded_at": "2026-06-18 17:59:54",
+        "verified_at": "2026-06-18 19:59:21"
+    },
+    {
+        "id": "res_6a343284a77e67.93283466",
+        "reference_number": "WM-20260618-003",
+        "email": "janstin@example.com",
+        "name": "Janstin Yamota",
+        "party": 3,
+        "date": "2026-06-23",
+        "time": "12:30 PM",
+        "notes": "",
+        "selected_foods": [],
+        "status": "Cancelled",
+        "payment_screenshot": "WM-20260618-003.jpg",
+        "payment_status": "Rejected",
+        "created_at": "2026-06-18 20:01:40",
+        "screenshot_uploaded_at": "2026-06-18 20:02:56"
     }
 ]

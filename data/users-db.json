@@ -1,0 +1,35 @@
+[
+    {
+        "id": 1,
+        "email": "kobemichael1014@gmail.com",
+        "name": "KOBE MICHAEL",
+        "phone": "09640623454",
+        "password_hash": "$2y$12$iNisGnhGQgoV9Xjdl.OgZ.Ne8CYeLE7aQWyq33d7L5YN/uaZRhfES",
+        "created_at": "2026-06-18 16:35:12",
+        "updated_at": "2026-06-18 16:35:12",
+        "last_login": null,
+        "is_active": true
+    },
+    {
+        "id": 2,
+        "email": "test@example.com",
+        "name": "Juan Dela Cruz",
+        "phone": "",
+        "password_hash": "$2y$12$vpMVdPrUOOYBdFlH7N9hEuki2HqGpdwUeDiqdxQd6J9jSzYl9KUGO",
+        "created_at": "2026-06-18 16:35:12",
+        "updated_at": "2026-06-18 16:35:12",
+        "last_login": null,
+        "is_active": true
+    },
+    {
+        "id": 3,
+        "email": "ysvyamota@gmail.com",
+        "name": "Ysvert Yamota",
+        "phone": "09929738671",
+        "password_hash": "$2y$10$UmWVC5ieamUpuYy5GDU2seHuzEH1TPK52j89kQoC0qGCp/TLCzFSq",
+        "created_at": "2026-06-18 16:35:12",
+        "updated_at": "2026-06-18 16:35:12",
+        "last_login": null,
+        "is_active": true
+    }
+]

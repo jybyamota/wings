@@ -200,6 +200,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
             
+            // Get selected foods
+            $selectedFoods = isset($_POST['foods']) ? (array)$_POST['foods'] : [];
+            
             $list[]  = [
                 'id'    => uniqid('res_', true),
                 'reference_number' => $refNumber,
@@ -209,6 +212,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'date'  => $date,
                 'time'  => $time,
                 'notes' => $notes,
+                'selected_foods' => $selectedFoods,
                 'status'=> 'Pending Payment',
                 'payment_screenshot' => $paymentScreenshot,
                 'payment_status' => 'Pending',
@@ -506,7 +510,16 @@ require_once __DIR__ . '/includes/header.php';
             <!-- SPECIAL NOTES -->
             <div class="res-field" style="margin-top:0.5rem;">
                 <label class="res-section-label" for="res-notes">Special Requests <span style="opacity:0.4; font-weight:400;">(optional)</span></label>
-                <textarea name="notes" id="res-notes" rows="2" placeholder="Allergies, celebrations, seating preferencesâ€¦" class="res-input" style="resize:vertical;"></textarea>
+                <textarea name="notes" id="res-notes" rows="2" placeholder="Allergies, celebrations, seating preferences…" class="res-input" style="resize:vertical;"></textarea>
+            </div>
+
+            <!-- AVAILABLE FOOD SELECTION -->
+            <div class="res-field" style="margin-top:1.5rem;">
+                <label class="res-section-label">Pre-order Foods <span style="opacity:0.4; font-weight:400;">(optional)</span></label>
+                <p style="font-size:0.8rem; color:rgba(255,255,255,0.6); margin-bottom:0.75rem;">Select items you'd like available when you arrive (helps us prepare)</p>
+                <div id="food-list" style="display:grid; grid-template-columns:1fr; gap:0.5rem; max-height:300px; overflow-y:auto; padding-right:0.5rem;">
+                    <!-- Food items will be loaded here by JS -->
+                </div>
             </div>
 
             <!-- GCASH SCREENSHOT UPLOAD -->
@@ -569,6 +582,11 @@ require_once __DIR__ . '/includes/header.php';
                     <div style="font-size:1rem; color:#fff; font-weight:500;">
                         Table for <?= (int)$r['party'] ?> Guest<?= $r['party'] > 1 ? 's' : '' ?>
                     </div>
+                    <?php if (!empty($r['selected_foods'])): ?>
+                    <div style="font-size:0.75rem; color:var(--accent-gold); margin-top:0.4rem; padding:0.4rem; background:rgba(232,184,60,0.1); border-radius:2px;">
+                        đŸœ Pre-ordered foods selected
+                    </div>
+                    <?php endif; ?>
                     <?php if (!empty($r['notes'])): ?>
                     <div style="font-size:0.8rem; color:var(--text-muted); margin-top:0.25rem;"><?= htmlspecialchars($r['notes'], ENT_QUOTES, 'UTF-8') ?></div>
                     <?php endif; ?>
@@ -680,7 +698,7 @@ function validateResForm() {
     return true;
 }
 
-// File upload handler
+// File upload handler + Food loader
 document.addEventListener('DOMContentLoaded', function() {
     var fileInput = document.getElementById('gcash-screenshot');
     var fileLabel = document.querySelector('.file-upload-label');
@@ -725,6 +743,53 @@ document.addEventListener('DOMContentLoaded', function() {
             fileInput.dispatchEvent(event);
         }
     });
+
+    // Load available foods
+    fetch('data/inventory.json')
+        .then(response => response.json())
+        .then(foods => {
+            var foodList = document.getElementById('food-list');
+            if (!foodList) return;
+            
+            var currentCategory = '';
+            foods.forEach(food => {
+                // Add category header if different
+                if (food.category !== currentCategory) {
+                    currentCategory = food.category;
+                    var header = document.createElement('div');
+                    header.style.cssText = 'grid-column:1/-1; font-size:0.75rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:rgba(232,184,60,0.7); margin-top:0.5rem; margin-bottom:0.3rem;';
+                    header.textContent = currentCategory;
+                    foodList.appendChild(header);
+                }
+                
+                var label = document.createElement('label');
+                label.style.cssText = 'display:flex; align-items:center; padding:0.6rem; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:3px; cursor:pointer; transition:all 0.2s;';
+                
+                var checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.name = 'foods';
+                checkbox.value = food.id;
+                checkbox.disabled = !food.available;
+                checkbox.style.cssText = 'margin-right:0.6rem; cursor:pointer; accent-color:var(--accent-gold);';
+                
+                var span = document.createElement('span');
+                span.style.cssText = 'flex:1; font-size:0.85rem; ' + (food.available ? '' : 'opacity:0.4; color:rgba(255,100,100,0.6);');
+                span.innerHTML = food.name + ' <span style="color:rgba(255,255,255,0.4); margin-left:0.3rem;">(₱' + food.price + ')</span>' + (food.available ? '' : ' <span style="color:#ff7070; font-size:0.7rem; margin-left:0.3rem;">OUT OF STOCK</span>');
+                
+                label.appendChild(checkbox);
+                label.appendChild(span);
+                
+                label.addEventListener('mouseenter', function() {
+                    if (food.available) this.style.borderColor = 'rgba(232,184,60,0.3)';
+                });
+                label.addEventListener('mouseleave', function() {
+                    this.style.borderColor = 'rgba(255,255,255,0.08)';
+                });
+                
+                foodList.appendChild(label);
+            });
+        })
+        .catch(err => console.log('Could not load food inventory'));
 });
 
 </script>

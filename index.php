@@ -55,13 +55,12 @@ require_once __DIR__ . '/includes/header.php';
 
         <section id="subscribe" class="subscribe-section">
             <div class="container subscribe-inner scroll-slide-up" data-scroll-animation="slide-up">
-                <h2 class="slide-transition-up" style="animation-delay: 0.1s;">Stay in the Loop</h2>
-                <p style="animation-delay: 0.2s;">Sign up for promos, new flavors, and updates from Wing Master.</p>
-                <form class="subscribe-form" action="subscribe.php" method="post" style="animation-delay: 0.3s;">
-                    <input type="email" name="email" placeholder="Email address" aria-label="Email address" required>
-                    <button type="submit" class="btn btn-primary pulse">Sign Up</button>
-                </form>
-                <p class="subscribe-note">Thank you for subscribing!</p>
+                <h2 class="slide-transition-up" style="animation-delay: 0.1s;">Ready to Reserve?</h2>
+                <p style="animation-delay: 0.2s;">Book your table now and celebrate with Wing Master.</p>
+                <div style="animation-delay: 0.3s;">
+                    <a href="<?= page_url('reservation.php') ?>" class="btn btn-primary pulse">Login & Reserve</a>
+                </div>
+                <p class="subscribe-note">Sign in with your account to make a reservation</p>
             </div>
         </section>
     </main>
