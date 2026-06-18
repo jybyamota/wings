@@ -18,62 +18,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 2. Sticky Navbar Effect on Scroll
+    // 2. Sticky Navbar Effect on Scroll (Disabled as per user request to not overlay on scroll)
     const navbar = document.getElementById('navbar');
-    if (navbar) {
-        const updateNavbarState = () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        };
-
-        updateNavbarState();
-        window.addEventListener('scroll', updateNavbarState, { passive: true });
-
-        // Hide-on-scroll: hide navbar when scrolling down, show when scrolling up
-        let lastScrollY = window.scrollY;
-        let ticking = false;
-        const SCROLL_DELTA = 10;
-
-        const handleNavVisibility = () => {
-            const currentY = window.scrollY;
-            // Ignore tiny scrolls
-            if (Math.abs(currentY - lastScrollY) <= SCROLL_DELTA) {
-                return;
-            }
-
-            // Debugging output to help diagnose hide/show behavior
-            console.debug('nav-scroll', { currentY, lastScrollY, delta: Math.abs(currentY - lastScrollY) });
-
-                if (currentY > lastScrollY && currentY > 50) {
-                    // scrolling down -> hide by moving top above viewport
-                    if (navbar.style.top === '0px' || navbar.style.top === '' ) {
-                        console.debug('nav-action', 'hiding-by-top');
-                    }
-                    navbar.style.setProperty('top', `-${navbar.offsetHeight}px`, 'important');
-                } else {
-                    // scrolling up -> show by resetting top
-                    if (navbar.style.top && navbar.style.top !== '0px') {
-                        console.debug('nav-action', 'showing-by-top');
-                    }
-                    navbar.style.setProperty('top', '0px', 'important');
-                }
-
-            lastScrollY = currentY;
-        };
-
-        window.addEventListener('scroll', () => {
-            if (!ticking) {
-                window.requestAnimationFrame(() => {
-                    handleNavVisibility();
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        }, { passive: true });
-    }
+    // Navbar positioning is now handled via absolute positioning in CSS to scroll naturally with the page.
 
     // 3. Scroll Animations (Intersection Observer)
     const fadeElements = document.querySelectorAll('.fade-in');
