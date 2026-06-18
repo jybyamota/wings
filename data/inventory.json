@@ -1,0 +1,226 @@
+[
+    {
+        "id": "wings-solo",
+        "name": "Wings Solo",
+        "category": "CHICKEN WINGS",
+        "price": 230,
+        "available": false
+    },
+    {
+        "id": "wings-tropa",
+        "name": "Wings Tropa",
+        "category": "CHICKEN WINGS",
+        "price": 285,
+        "available": false
+    },
+    {
+        "id": "bilao-wings-a",
+        "name": "Bilao Wings A",
+        "category": "CHICKEN WINGS",
+        "price": 699,
+        "available": false
+    },
+    {
+        "id": "bilao-wings-b",
+        "name": "Bilao Wings B",
+        "category": "CHICKEN WINGS",
+        "price": 850,
+        "available": false
+    },
+    {
+        "id": "bilao-wings-c",
+        "name": "Bilao Wings C",
+        "category": "CHICKEN WINGS",
+        "price": 999,
+        "available": false
+    },
+    {
+        "id": "bilao-wings-shanghai",
+        "name": "Bilao Wings & Shanghai",
+        "category": "CHICKEN WINGS",
+        "price": 550,
+        "available": false
+    },
+    {
+        "id": "wings-fries",
+        "name": "Flavored Wings & Fries",
+        "category": "COMBO SNACKS",
+        "price": 135,
+        "available": false
+    },
+    {
+        "id": "wings-nachos",
+        "name": "Flavored Wings & Nachos",
+        "category": "COMBO SNACKS",
+        "price": 135,
+        "available": false
+    },
+    {
+        "id": "nachos-quesadilla",
+        "name": "Nachos & Quesadilla",
+        "category": "COMBO SNACKS",
+        "price": 199,
+        "available": false
+    },
+    {
+        "id": "fries-nachos",
+        "name": "Fries & Nachos",
+        "category": "COMBO SNACKS",
+        "price": 135,
+        "available": false
+    },
+    {
+        "id": "popshot-fries",
+        "name": "Popshot & Fries",
+        "category": "COMBO SNACKS",
+        "price": 135,
+        "available": false
+    },
+    {
+        "id": "italian-spaghetti",
+        "name": "Italian Spaghetti",
+        "category": "SOLO SNACKS",
+        "price": 75,
+        "available": false
+    },
+    {
+        "id": "korean-corndog",
+        "name": "Korean Corndog",
+        "category": "SOLO SNACKS",
+        "price": 89,
+        "available": false
+    },
+    {
+        "id": "korean-corndog-trio",
+        "name": "Korean Corndog Trio",
+        "category": "SOLO SNACKS",
+        "price": 260,
+        "available": false
+    },
+    {
+        "id": "cheesy-beef-quesadilla",
+        "name": "Cheesy Beef Quesadilla",
+        "category": "SOLO SNACKS",
+        "price": 230,
+        "available": false
+    },
+    {
+        "id": "classic-french-fries",
+        "name": "Classic French Fries",
+        "category": "SOLO SNACKS",
+        "price": 75,
+        "available": false
+    },
+    {
+        "id": "flavored-french-fries",
+        "name": "Flavored French Fries",
+        "category": "SOLO SNACKS",
+        "price": 95,
+        "available": false
+    },
+    {
+        "id": "kropek-crackers",
+        "name": "Kropek Crackers",
+        "category": "SOLO SNACKS",
+        "price": 75,
+        "available": false
+    },
+    {
+        "id": "cheesy-nachos-solo",
+        "name": "Cheesy Nachos Solo",
+        "category": "SOLO SNACKS",
+        "price": 125,
+        "available": false
+    },
+    {
+        "id": "cheesy-nachos-tropa",
+        "name": "Cheesy Nachos Tropa",
+        "category": "SOLO SNACKS",
+        "price": 210,
+        "available": false
+    },
+    {
+        "id": "pancit-guisado",
+        "name": "Pancit Guisado",
+        "category": "SHORT ORDERS",
+        "price": 220,
+        "available": false
+    },
+    {
+        "id": "breaded-fish-fillet",
+        "name": "Breaded Fish Fillet",
+        "category": "SHORT ORDERS",
+        "price": 220,
+        "available": false
+    },
+    {
+        "id": "chicken-fingers",
+        "name": "Chicken Fingers",
+        "category": "SHORT ORDERS",
+        "price": 245,
+        "available": false
+    },
+    {
+        "id": "lumpiang-shanghai",
+        "name": "Lumpiang Shanghai",
+        "category": "SHORT ORDERS",
+        "price": 245,
+        "available": false
+    },
+    {
+        "id": "pork-sinigang",
+        "name": "Pork Sinigang",
+        "category": "SHORT ORDERS",
+        "price": 245,
+        "available": false
+    },
+    {
+        "id": "bangus-sinigang",
+        "name": "Bangus Sinigang",
+        "category": "SHORT ORDERS",
+        "price": 240,
+        "available": false
+    },
+    {
+        "id": "tuna-kinilaw",
+        "name": "Tuna Kinilaw",
+        "category": "SHORT ORDERS",
+        "price": 240,
+        "available": false
+    },
+    {
+        "id": "calamares",
+        "name": "Calamares",
+        "category": "SHORT ORDERS",
+        "price": 250,
+        "available": false
+    },
+    {
+        "id": "sinuglaw",
+        "name": "Sinuglaw",
+        "category": "SHORT ORDERS",
+        "price": 290,
+        "available": false
+    },
+    {
+        "id": "fried-tofu",
+        "name": "Fried Tofu",
+        "category": "APPETIZERS",
+        "price": 45,
+        "available": false
+    },
+    {
+        "id": "lumpiang-ubod",
+        "name": "4pcs Lumpiang Ubod",
+        "category": "APPETIZERS",
+        "price": 45,
+        "available": false
+    },
+    {
+        "id": "pork-shrimp-siomai",
+        "name": "4pcs Pork Shrimp Siomai",
+        "category": "APPETIZERS",
+        "price": 49,
+        "available": false
+    }
+]

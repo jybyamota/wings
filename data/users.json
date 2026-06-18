@@ -13,5 +13,10 @@
         "name": "Ysvert Yamota",
         "phone": "09929738671",
         "hash": "$2y$10$UmWVC5ieamUpuYy5GDU2seHuzEH1TPK52j89kQoC0qGCp\/TLCzFSq"
+    },
+    "testuser@wings.com": {
+        "name": "Test User",
+        "phone": "09123456789",
+        "hash": "$2y$12$SgnLZSKXVDSAZ5TEQjlymu9YkgBAvr2pi6an8RyqBXsh6Rw5XQmn2"
     }
 }

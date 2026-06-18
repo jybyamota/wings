@@ -69,6 +69,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
     }
+
+    // Handle inventory toggle
+    if ($action === 'toggle_inventory' && ADMIN_AUTHENTICATED) {
+        $foodId = $_POST['food_id'] ?? '';
+        $invFile = __DIR__ . '/data/inventory.json';
+        if (file_exists($invFile)) {
+            $inventory = json_decode(file_get_contents($invFile), true) ?: [];
+            foreach ($inventory as &$item) {
+                if ($item['id'] === $foodId) {
+                    $item['available'] = !($item['available'] ?? true);
+                    break;
+                }
+            }
+            file_put_contents($invFile, json_encode($inventory, JSON_PRETTY_PRINT));
+            header('Location: admin.php?tab=inventory');
+            exit;
+        }
+    }
 }
 
 // Load all reservations
@@ -83,6 +101,17 @@ if (ADMIN_AUTHENTICATED) {
         });
     }
 }
+
+// Load inventory
+$inventory = [];
+if (ADMIN_AUTHENTICATED) {
+    $invFile = __DIR__ . '/data/inventory.json';
+    if (file_exists($invFile)) {
+        $inventory = json_decode(file_get_contents($invFile), true) ?: [];
+    }
+}
+
+$currentTab = $_GET['tab'] ?? 'reservations';
 
 $currentPage = 'admin';
 require_once __DIR__ . '/includes/header.php';
@@ -143,11 +172,45 @@ require_once __DIR__ . '/includes/header.php';
 <!-- ADMIN DASHBOARD -->
 <header class="page-hero page-hero--light transition-fade-in" style="position:relative; padding:3rem 2rem;">
     <div style="text-align:center;">
-        <h1 style="font-size:2.5rem; color:#fff;">Reservations & Payments</h1>
-        <p style="color:rgba(255,255,255,0.5); font-size:1.1rem; margin-top:0.5rem;">Review and verify customer payments</p>
+        <h1 style="font-size:2.5rem; color:#fff;">Admin Panel</h1>
+        <p style="color:rgba(255,255,255,0.5); font-size:1.1rem; margin-top:0.5rem;">Manage reservations, payments & inventory</p>
     </div>
 </header>
 
+<!-- ADMIN TABS -->
+<div style="background:var(--bg-cream); border-bottom:1px solid rgba(232,184,60,0.1); padding:0 2rem;">
+    <div class="container" style="max-width:1400px; display:flex; gap:0; border-bottom:2px solid transparent;">
+        <a href="admin.php?tab=reservations" style="
+            padding:1.2rem 1.5rem; color:<?= $currentTab === 'reservations' ? 'var(--accent-gold)' : 'rgba(255,255,255,0.5)' ?>;
+            text-decoration:none; border-bottom:2px solid <?= $currentTab === 'reservations' ? 'var(--accent-gold)' : 'transparent' ?>;
+            transition:all 0.2s; font-weight:600; font-size:0.9rem; letter-spacing:0.05em;
+        ">
+            📋 Reservations
+        </a>
+        <a href="admin.php?tab=inventory" style="
+            padding:1.2rem 1.5rem; color:<?= $currentTab === 'inventory' ? 'var(--accent-gold)' : 'rgba(255,255,255,0.5)' ?>;
+            text-decoration:none; border-bottom:2px solid <?= $currentTab === 'inventory' ? 'var(--accent-gold)' : 'transparent' ?>;
+            transition:all 0.2s; font-weight:600; font-size:0.9rem; letter-spacing:0.05em;
+        ">
+            🍽 Inventory
+        </a>
+        <div style="flex:1;"></div>
+        <form method="post" style="display:flex; align-items:center;">
+            <input type="hidden" name="action" value="logout">
+            <button type="submit" style="
+                padding:0.8rem 1.2rem; background:rgba(255,100,100,0.15); color:#ff7070;
+                border:1px solid rgba(255,100,100,0.3); border-radius:4px; cursor:pointer;
+                font-size:0.85rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em;
+                transition:all 0.2s;
+            " onmouseover="this.style.background='rgba(255,100,100,0.25)'" onmouseout="this.style.background='rgba(255,100,100,0.15)'">
+                Logout
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- RESERVATIONS TAB -->
+<?php if ($currentTab === 'reservations'): ?>
 <!-- RESERVATIONS TABLE -->
 <section style="background:var(--bg-cream); padding:3rem 2rem;">
     <div class="container" style="max-width:1400px;">
@@ -164,6 +227,7 @@ require_once __DIR__ . '/includes/header.php';
                         <th style="text-align:left; padding:1rem; color:rgba(255,255,255,0.6); font-size:0.85rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em;">Customer</th>
                         <th style="text-align:left; padding:1rem; color:rgba(255,255,255,0.6); font-size:0.85rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em;">Date & Time</th>
                         <th style="text-align:left; padding:1rem; color:rgba(255,255,255,0.6); font-size:0.85rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em;">Party</th>
+                        <th style="text-align:left; padding:1rem; color:rgba(255,255,255,0.6); font-size:0.85rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em;">Pre-ordered Foods</th>
                         <th style="text-align:left; padding:1rem; color:rgba(255,255,255,0.6); font-size:0.85rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em;">Payment</th>
                         <th style="text-align:left; padding:1rem; color:rgba(255,255,255,0.6); font-size:0.85rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em;">Screenshot</th>
                         <th style="text-align:left; padding:1rem; color:rgba(255,255,255,0.6); font-size:0.85rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em;">Actions</th>
@@ -185,6 +249,32 @@ require_once __DIR__ . '/includes/header.php';
                         </td>
                         <td style="padding:1rem; color:#fff; font-weight:500;">
                             <?= (int)($res['party'] ?? 0) ?> guests
+                        </td>
+                        <td style="padding:1rem;">
+                            <?php 
+                                $selectedFoods = $res['selected_foods'] ?? [];
+                                if (!empty($selectedFoods)):
+                                    $foodNames = [];
+                                    foreach ($selectedFoods as $foodId):
+                                        foreach ($inventory as $item):
+                                            if ($item['id'] === $foodId):
+                                                $foodNames[] = $item['name'];
+                                                break;
+                                            endif;
+                                        endforeach;
+                                    endforeach;
+                                    if (!empty($foodNames)):
+                            ?>
+                            <div style="font-size:0.8rem; color:rgba(255,255,255,0.8); max-height:60px; overflow-y:auto;">
+                                <?php foreach ($foodNames as $name): ?>
+                                <div style="padding:0.25rem 0; color:var(--accent-gold);">• <?= htmlspecialchars($name, ENT_QUOTES, 'UTF-8') ?></div>
+                                <?php endforeach; ?>
+                            </div>
+                            <?php else: ?>
+                            <span style="color:rgba(255,255,255,0.4);">—</span>
+                            <?php endif; else: ?>
+                            <span style="color:rgba(255,255,255,0.4);">No pre-orders</span>
+                            <?php endif; ?>
                         </td>
                         <td style="padding:1rem;">
                             <?php $paymentStatus = $res['payment_status'] ?? 'Pending'; ?>
@@ -262,5 +352,104 @@ require_once __DIR__ . '/includes/header.php';
 </section>
 
 <?php endif; ?>
+
+<!-- INVENTORY TAB -->
+<?php if ($currentTab === 'inventory'): ?>
+<section style="background:var(--bg-cream); padding:3rem 2rem;">
+    <div class="container" style="max-width:1400px;">
+        <div style="margin-bottom:2rem;">
+            <h3 style="font-family:var(--font-display); font-size:1.75rem; color:#fff; margin-bottom:0.4rem;">Food Inventory</h3>
+            <p style="color:rgba(255,255,255,0.5); font-size:0.9rem;">Toggle food items to mark as available or out of stock</p>
+        </div>
+
+        <?php if (empty($inventory)): ?>
+        <div style="text-align:center; padding:3rem 2rem; color:rgba(255,255,255,0.5); background:rgba(0,0,0,0.2); border-radius:4px;">
+            <p style="font-size:1.1rem;">No inventory items found.</p>
+        </div>
+        <?php else: ?>
+        <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:1rem;">
+            <?php 
+                $currentCat = '';
+                foreach ($inventory as $item): 
+            ?>
+                <div style="
+                    background:var(--bg-card); border:1px solid rgba(232,184,60,0.1);
+                    border-radius:4px; padding:1.5rem; transition:all 0.2s;
+                " onmouseover="this.style.borderColor='rgba(232,184,60,0.3)'" onmouseout="this.style.borderColor='rgba(232,184,60,0.1)'">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:1rem;">
+                        <div style="flex:1;">
+                            <div style="font-size:0.7rem; color:var(--accent-gold); font-weight:700; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:0.3rem;">
+                                <?= htmlspecialchars($item['category'], ENT_QUOTES, 'UTF-8') ?>
+                            </div>
+                            <h4 style="color:#fff; font-size:1rem; margin-bottom:0.5rem;">
+                                <?= htmlspecialchars($item['name'], ENT_QUOTES, 'UTF-8') ?>
+                            </h4>
+                            <div style="color:rgba(255,255,255,0.6); font-size:0.9rem;">
+                                ₱<?= number_format($item['price'], 2) ?>
+                            </div>
+                        </div>
+                        <form style="display:none;">
+                            <input type="hidden" name="action" value="toggle_inventory">
+                            <input type="hidden" name="food_id" value="<?= htmlspecialchars($item['id'], ENT_QUOTES, 'UTF-8') ?>">
+                            <button type="button" onclick="toggleInventory(event, this)" data-food-id="<?= htmlspecialchars($item['id'], ENT_QUOTES, 'UTF-8') ?>" data-available="<?= $item['available'] ? '1' : '0' ?>" style="
+                                padding:0.6rem 1rem; 
+                                background:<?= $item['available'] ? 'rgba(100,255,100,0.2)' : 'rgba(255,100,100,0.2)' ?>;
+                                color:<?= $item['available'] ? '#70ff70' : '#ff7070' ?>;
+                                border:1px solid <?= $item['available'] ? 'rgba(100,255,100,0.4)' : 'rgba(255,100,100,0.4)' ?>;
+                                border-radius:3px; cursor:pointer; font-size:0.8rem; font-weight:600;
+                                text-transform:uppercase; letter-spacing:0.05em; transition:all 0.2s;
+                                white-space:nowrap;
+                            " onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
+                                <?= $item['available'] ? 'Available' : 'Out of Stock' ?>
+                            </button>
+                        </form>
+                        <button onclick="toggleInventory(event, this)" data-food-id="<?= htmlspecialchars($item['id'], ENT_QUOTES, 'UTF-8') ?>" data-available="<?= $item['available'] ? '1' : '0' ?>" style="
+                                padding:0.6rem 1rem; 
+                                background:<?= $item['available'] ? 'rgba(100,255,100,0.2)' : 'rgba(255,100,100,0.2)' ?>;
+                                color:<?= $item['available'] ? '#70ff70' : '#ff7070' ?>;
+                                border:1px solid <?= $item['available'] ? 'rgba(100,255,100,0.4)' : 'rgba(255,100,100,0.4)' ?>;
+                                border-radius:3px; cursor:pointer; font-size:0.8rem; font-weight:600;
+                                text-transform:uppercase; letter-spacing:0.05em; transition:all 0.2s;
+                                white-space:nowrap;
+                            " onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
+                                <?= $item['available'] ? 'Available' : 'Out of Stock' ?>
+                        </button>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        <?php endif; ?>
+    </div>
+</section>
+<?php endif; ?>
+
+<?php endif; ?>
+
+<script>
+function toggleInventory(event, button) {
+    event.preventDefault();
+    const foodId = button.getAttribute('data-food-id');
+    const isAvailable = button.getAttribute('data-available') === '1';
+    
+    const formData = new FormData();
+    formData.append('action', 'toggle_inventory');
+    formData.append('food_id', foodId);
+    
+    fetch('admin.php?tab=inventory', {
+        method: 'POST',
+        body: formData
+    })
+    .then(() => {
+        // Update button appearance immediately
+        const newAvailable = !isAvailable;
+        button.setAttribute('data-available', newAvailable ? '1' : '0');
+        button.textContent = newAvailable ? 'Available' : 'Out of Stock';
+        button.style.background = newAvailable ? 'rgba(100,255,100,0.2)' : 'rgba(255,100,100,0.2)';
+        button.style.color = newAvailable ? '#70ff70' : '#ff7070';
+        button.style.borderColor = newAvailable ? 'rgba(100,255,100,0.4)' : 'rgba(255,100,100,0.4)';
+    })
+    .catch(err => console.error('Error:', err));
+}
+</script>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>
