@@ -4,22 +4,90 @@ declare(strict_types=1);
 
 session_start();
 
+require_once __DIR__ . '/includes/config.php';
+
 $pageTitle = 'Reservation - Wing Master';
 $currentPage = 'reservation';
 $navScrolled = false;
 
-// ---------- flat-file auth ----------
+// ---------- auth helpers ----------
 define('USERS_FILE', __DIR__ . '/data/users.json');
 
-function load_users(): array {
-    if (!file_exists(USERS_FILE)) return [];
+function migrate_users_to_db(): void {
+    if (!file_exists(USERS_FILE)) {
+        return;
+    }
+
     $json = file_get_contents(USERS_FILE);
-    return $json ? json_decode($json, true) : [];
+    $users = $json ? json_decode($json, true) : [];
+    if (!$users || !is_array($users)) {
+        return;
+    }
+
+    $db = db_connect();
+    $stmt = $db->prepare('INSERT INTO `user` (`name`, `email`, `phone`, `password_hash`) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE `name` = VALUES(`name`), `phone` = VALUES(`phone`), `password_hash` = VALUES(`password_hash`)');
+
+    foreach ($users as $email => $data) {
+        $normalized = strtolower(trim($email));
+        if ($normalized === '' || !isset($data['name'], $data['hash'])) {
+            continue;
+        }
+        $name = $data['name'];
+        $phone = $data['phone'] ?? null;
+        $hash = $data['hash'];
+        $stmt->bind_param('ssss', $name, $normalized, $phone, $hash);
+        $stmt->execute();
+    }
+
+    $stmt->close();
+    $db->close();
 }
 
-function save_users(array $users): void {
-    if (!is_dir(dirname(USERS_FILE))) mkdir(dirname(USERS_FILE), 0755, true);
-    file_put_contents(USERS_FILE, json_encode($users, JSON_PRETTY_PRINT));
+function load_users(): array {
+    migrate_users_to_db();
+
+    $users = [];
+    $db = db_connect();
+    $stmt = $db->prepare('SELECT name, email, phone, password_hash FROM `user`');
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    while ($row = $result->fetch_assoc()) {
+        $users[strtolower($row['email'])] = [
+            'name' => $row['name'],
+            'phone' => $row['phone'],
+            'hash' => $row['password_hash'],
+        ];
+    }
+
+    $stmt->close();
+    $db->close();
+
+    return $users;
+}
+
+function save_user(array $user): void {
+    if (!is_dir(dirname(USERS_FILE))) {
+        mkdir(dirname(USERS_FILE), 0755, true);
+    }
+
+    $existing = [];
+    if (file_exists(USERS_FILE)) {
+        $json = file_get_contents(USERS_FILE);
+        $existing = $json ? json_decode($json, true) : [];
+        if (!is_array($existing)) {
+            $existing = [];
+        }
+    }
+    $existing[$user['email']] = $user;
+    file_put_contents(USERS_FILE, json_encode($existing, JSON_PRETTY_PRINT));
+
+    $db = db_connect();
+    $stmt = $db->prepare('INSERT INTO `user` (`name`, `email`, `phone`, `password_hash`) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE `name` = VALUES(`name`), `phone` = VALUES(`phone`), `password_hash` = VALUES(`password_hash`)');
+    $stmt->bind_param('ssss', $user['name'], $user['email'], $user['phone'], $user['hash']);
+    $stmt->execute();
+    $stmt->close();
+    $db->close();
 }
 
 // ---------- handle POST ----------
@@ -32,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($action === 'login') {
         $activeTab = 'login';
-        $email    = trim($_POST['email'] ?? '');
+        $email    = strtolower(trim($_POST['email'] ?? ''));
         $password = $_POST['password'] ?? '';
         $users    = load_users();
 
@@ -53,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($action === 'register') {
         $activeTab = 'register';
         $name      = trim($_POST['name'] ?? '');
-        $email     = trim($_POST['email'] ?? '');
+        $email     = strtolower(trim($_POST['email'] ?? ''));
         $phone     = trim($_POST['phone'] ?? '');
         $password  = $_POST['password'] ?? '';
         $confirm   = $_POST['confirm'] ?? '';
@@ -70,12 +138,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } elseif (isset($users[$email])) {
             $registerError = 'An account with that email already exists.';
         } else {
-            $users[$email] = [
+            $newUser = [
+                'email' => $email,
                 'name'  => $name,
                 'phone' => $phone,
                 'hash'  => password_hash($password, PASSWORD_DEFAULT),
             ];
-            save_users($users);
+            save_user($newUser);
             $_SESSION['user_email'] = $email;
             $_SESSION['user_name']  = $name;
             header('Location: reservation.php');
@@ -155,6 +224,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $isLoggedIn   = isset($_SESSION['user_email']);
+$bodyClass    = $isLoggedIn ? '' : 'auth-page-body';
 $reserveError = $reserveError ?? '';
 $booked       = isset($_GET['booked']);
 
@@ -180,6 +250,11 @@ require_once __DIR__ . '/includes/header.php';
 <?php if (!$isLoggedIn): ?>
     <!-- ===== LOGIN / REGISTER PAGE ===== -->
     <section class="auth-page">
+        <div class="auth-page-bg" aria-hidden="true">
+            <span class="auth-glow auth-glow--gold"></span>
+            <span class="auth-glow auth-glow--warm"></span>
+        </div>
+
         <div class="auth-container">
 
             <!-- Left: Branding panel -->
@@ -187,19 +262,26 @@ require_once __DIR__ . '/includes/header.php';
                 <div class="auth-brand-overlay"></div>
                 <div class="auth-brand-content">
                     <img src="images/logo.png" alt="Wing Master" class="auth-brand-logo">
+                    <p class="auth-brand-eyebrow">Wing Master Silog</p>
                     <h2>Reserve Your<br>Table Today</h2>
                     <p>Sign in or create an account to book your table for birthdays, barkada nights, and family celebrations.</p>
                     <div class="auth-brand-features">
                         <div class="auth-feature">
-                            <span class="auth-feature-icon">âœ¦</span>
+                            <span class="auth-feature-icon" aria-hidden="true">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                            </span>
                             <span>Quick &amp; easy booking</span>
                         </div>
                         <div class="auth-feature">
-                            <span class="auth-feature-icon">âœ¦</span>
+                            <span class="auth-feature-icon" aria-hidden="true">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                            </span>
                             <span>Manage your reservations</span>
                         </div>
                         <div class="auth-feature">
-                            <span class="auth-feature-icon">âœ¦</span>
+                            <span class="auth-feature-icon" aria-hidden="true">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                            </span>
                             <span>Exclusive member promos</span>
                         </div>
                     </div>
@@ -212,6 +294,7 @@ require_once __DIR__ . '/includes/header.php';
                 <div class="auth-tabs" id="auth-tabs">
                     <button type="button" class="auth-tab <?= $activeTab === 'login' ? 'is-active' : '' ?>" data-tab="login" id="tab-login-btn">Sign In</button>
                     <button type="button" class="auth-tab <?= $activeTab === 'register' ? 'is-active' : '' ?>" data-tab="register" id="tab-register-btn">Create Account</button>
+                    <span class="auth-tab-indicator" aria-hidden="true"></span>
                 </div>
 
                 <!-- ===== LOGIN FORM ===== -->
@@ -303,9 +386,9 @@ require_once __DIR__ . '/includes/header.php';
 <!-- ===== LOGGED-IN RESERVATION PAGE ===== -->
 
 <!-- HERO -->
-<header class="page-hero page-hero--light transition-fade-in" style="position:relative;">
-
-    <div class="container page-hero-inner slide-transition-up" style="text-align:center;">
+<header class="page-hero reservation-hero transition-fade-in">
+    <div class="reservation-hero-overlay"></div>
+    <div class="container page-hero-inner slide-transition-up">
         <p class="hero-eyebrow" style="animation-delay:0.1s;">Welcome back, <?= htmlspecialchars($_SESSION['user_name'], ENT_QUOTES, 'UTF-8') ?></p>
         <h1 style="animation-delay:0.2s;">Book a Table</h1>
         <p class="hero-lead" style="animation-delay:0.3s; max-width:560px; margin:0 auto 2.5rem;">

@@ -13,5 +13,21 @@
         "name": "Ysvert Yamota",
         "phone": "09929738671",
         "hash": "$2y$10$UmWVC5ieamUpuYy5GDU2seHuzEH1TPK52j89kQoC0qGCp\/TLCzFSq"
+    },
+    "kobe@example.com": {
+        "name": "Kobe Lopez",
+        "phone": "09929738671",
+        "hash": "$2y$10$iREckefkG1FP\/kQocqDVy.xiwZbNfW9tIyrzI2GpIXdpVWOkvwiHy"
+    },
+    "": {
+        "name": "Gab Cabrera",
+        "phone": "09929738671",
+        "hash": "$2y$10$HzTz\/y0\/nOsk\/H7KTkJNmOQch5hc6Z9IuQcLZA3cZWR54B5M0S0s2"
+    },
+    "gab@example.com": {
+        "email": "gab@example.com",
+        "name": "Gab Cabrera",
+        "phone": "09929738671",
+        "hash": "$2y$10$Db29XjTQJWZXyLDXSozqr.wqW4ALBKqxbXptceWQJ3TP7obEoTqLa"
     }
 }

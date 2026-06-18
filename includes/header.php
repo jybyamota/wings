@@ -7,7 +7,7 @@ require_once __DIR__ . '/config.php';
 $pageTitle = $pageTitle ?? SITE_NAME;
 $currentPage = $currentPage ?? 'home';
 $navScrolled = $navScrolled ?? false;
-$bodyClass = $currentPage === 'menu' ? 'menu-page' : '';
+$bodyClass = $bodyClass ?? ($currentPage === 'menu' ? 'menu-page' : '');
 $cssVersion = (string) filemtime(__DIR__ . '/../css/style.css');
 ?>
 <!DOCTYPE html>

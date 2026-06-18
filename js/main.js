@@ -30,39 +30,50 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         updateNavbarState();
+        navbar.classList.add('nav-visible');
         window.addEventListener('scroll', updateNavbarState, { passive: true });
 
         // Hide-on-scroll: hide navbar when scrolling down, show when scrolling up
         let lastScrollY = window.scrollY;
         let ticking = false;
-        const SCROLL_DELTA = 10;
+        const SCROLL_DELTA = 8;
+
+        const logoImage = navbar.querySelector('.logo-image');
 
         const handleNavVisibility = () => {
             const currentY = window.scrollY;
-            // Ignore tiny scrolls
-            if (Math.abs(currentY - lastScrollY) <= SCROLL_DELTA) {
+            const delta = currentY - lastScrollY;
+            if (Math.abs(delta) <= SCROLL_DELTA) {
                 return;
             }
 
-            // Debugging output to help diagnose hide/show behavior
-            console.debug('nav-scroll', { currentY, lastScrollY, delta: Math.abs(currentY - lastScrollY) });
-
-                if (currentY > lastScrollY && currentY > 50) {
-                    // scrolling down -> hide by moving top above viewport
-                    if (navbar.style.top === '0px' || navbar.style.top === '' ) {
-                        console.debug('nav-action', 'hiding-by-top');
-                    }
-                    navbar.style.setProperty('top', `-${navbar.offsetHeight}px`, 'important');
-                } else {
-                    // scrolling up -> show by resetting top
-                    if (navbar.style.top && navbar.style.top !== '0px') {
-                        console.debug('nav-action', 'showing-by-top');
-                    }
-                    navbar.style.setProperty('top', '0px', 'important');
+            const isScrollingDown = delta > 0 && currentY > 40;
+            if (isScrollingDown) {
+                navbar.classList.add('nav-hidden');
+                navbar.classList.remove('nav-visible');
+                navbar.style.transform = 'translateY(-110%)';
+                navbar.style.opacity = '0';
+                navbar.style.pointerEvents = 'none';
+                if (logoImage) {
+                    logoImage.style.opacity = '0';
+                    logoImage.style.transform = 'scale(0.96)';
                 }
+            } else {
+                navbar.classList.remove('nav-hidden');
+                navbar.classList.add('nav-visible');
+                navbar.style.transform = 'translateY(0)';
+                navbar.style.opacity = '1';
+                navbar.style.pointerEvents = 'auto';
+                if (logoImage) {
+                    logoImage.style.opacity = '1';
+                    logoImage.style.transform = 'scale(1)';
+                }
+            }
 
             lastScrollY = currentY;
         };
+
+        handleNavVisibility();
 
         window.addEventListener('scroll', () => {
             if (!ticking) {
@@ -239,30 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
         fadeElements.forEach(element => {
             const rect = element.getBoundingClientRect();
-            if(rect.top < window.innerHeight) {
-                element.classList.add('appear');
-            }
-        });
-    }, 100);
-
-    // 6. Scroll Fade-Out Effect
-    const fadeOutOnScroll = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (!entry.target.classList.contains('appear')) {
-                return;
-            }
-            if (!entry.isIntersecting) {
-                entry.target.classList.add('fade-out-up');
-            } else {
-                entry.target.classList.remove('fade-out-up');
-            }
-        });
-
-    // Trigger initial check for elements already in viewport on load
-    setTimeout(() => {
-        fadeElements.forEach(element => {
-            const rect = element.getBoundingClientRect();
-            if(rect.top < window.innerHeight) {
+            if (rect.top < window.innerHeight) {
                 element.classList.add('appear');
             }
         });
