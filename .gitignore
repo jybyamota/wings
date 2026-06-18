@@ -1,0 +1,5 @@
+data/subscribers.txt
+.DS_Store
+Thumbs.db
+*.log
+.codex-php/
